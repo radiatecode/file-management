@@ -117,6 +117,7 @@ class FileViewerController extends Controller
 
     public function fileUpload(Request $request){
             if ($request->hasFile('file')){
+                $directory = Directory::find($request->dir_id);
                 $image = $request->file('file');
                 $filename = time()."_".$image->getClientOriginalName();
                 $path = $request->file('file')->storeAs(
@@ -126,6 +127,7 @@ class FileViewerController extends Controller
                 $file->file_name = $filename;
                 $file->file_extension = ucwords($image->getClientOriginalExtension());
                 $file->file_path = $request->dir_path."/".$filename;
+                $file->file_type = $directory->file_types->file_type;
                 $file->save();
                 return response()->json([
                     'status' => 'ok',

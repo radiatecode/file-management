@@ -22980,7 +22980,7 @@ var render = function() {
           },
           [
             _c("i", { staticClass: "fa fa-plus-square" }),
-            _vm._v(" Folder\n        ")
+            _vm._v(" Folder\r\n        ")
           ]
         ),
         _vm._v(" "),
@@ -22997,7 +22997,9 @@ var render = function() {
     _c("div", { staticClass: "panel panel-default" }, [
       _c("div", { staticClass: "panel-heading" }, [
         _vm._v(
-          "\n        Sub Directories of " + _vm._s(_vm.prop_data.dir) + "\n    "
+          "\r\n        Sub Directories of " +
+            _vm._s(_vm.prop_data.dir) +
+            "\r\n    "
         )
       ]),
       _vm._v(" "),
@@ -23061,7 +23063,7 @@ var render = function() {
                               _vm._v(
                                 " " +
                                   _vm._s(dir.sub_dir) +
-                                  "\n                            "
+                                  "\r\n                            "
                               )
                             ])
                           ]
@@ -23190,7 +23192,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("button", { staticClass: "btn btn-danger btn-sm" }, [
       _c("i", { staticClass: "fa fa-trash-o" }),
-      _vm._v(" Delete\n        ")
+      _vm._v(" Delete\r\n        ")
     ])
   },
   function() {
@@ -23199,7 +23201,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("button", { staticClass: "btn btn-primary btn-sm" }, [
       _c("i", { staticClass: "fa fa-arrows-alt" }),
-      _vm._v(" Move\n        ")
+      _vm._v(" Move\r\n        ")
     ])
   },
   function() {
@@ -23208,7 +23210,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("button", { staticClass: "btn btn-primary btn-sm" }, [
       _c("i", { staticClass: "fa fa-arrows-alt" }),
-      _vm._v(" Rename\n        ")
+      _vm._v(" Rename\r\n        ")
     ])
   },
   function() {
@@ -23217,7 +23219,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("button", { staticClass: "btn btn-warning btn-sm" }, [
       _c("i", { staticClass: "fa fa-backward" }),
-      _vm._v(" Back\n        ")
+      _vm._v(" Back\r\n        ")
     ])
   },
   function() {
@@ -35934,8 +35936,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\dark007\Desktop\file management\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\dark007\Desktop\file management\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\lenovo\Desktop\file-management\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\lenovo\Desktop\file-management\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -10,7 +10,7 @@ class Directory extends Model
        return $this->hasMany('App\File','dir_id','id');
     }
 
-    public function file_type(){
+    public function file_types(){
         return $this->belongsTo('App\FileType','root_dir_id');
     }
 

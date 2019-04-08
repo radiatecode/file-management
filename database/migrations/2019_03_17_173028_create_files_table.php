@@ -18,6 +18,7 @@ class CreateFilesTable extends Migration
             $table->integer('dir_id')->unsigned();
             $table->string('file_name');
             $table->string('file_extension');
+            $table->string('file_type');
             $table->text('file_path');
             $table->softDeletes();
             $table->timestamps();
