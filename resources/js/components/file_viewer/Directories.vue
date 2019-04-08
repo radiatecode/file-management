@@ -1,85 +1,85 @@
 <template>
-<div>
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <button type="button" @click="showModal" class="btn btn-success btn-sm">
-            <i class="fa fa-plus-square"></i> Folder
-        </button>
-        <button class="btn btn-danger btn-sm">
-            <i class="fa fa-trash-o"></i> Delete
-        </button>
-        <button class="btn btn-primary btn-sm">
-            <i class="fa fa-arrows-alt"></i> Move
-        </button>
-        <button class="btn btn-primary btn-sm">
-            <i class="fa fa-arrows-alt"></i> Rename
-        </button>
-        <button class="btn btn-warning btn-sm">
-            <i class="fa fa-backward"></i> Back
-        </button>
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        Sub Directories of {{ prop_data.dir }}
-    </div>
-    <div class="panel-body">
-        <div v-show="loader" class="loader"></div>
-        <div v-show="!loader" class="table-responsive">
-            <table class="table table-striped table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th style="width: 15px">
-                        <div class="checkbox3 checkbox-success checkbox-inline checkbox-check checkbox-round checkbox-light">
-                            <input type="checkbox" id="checkbox-fa-light-2" checked="">
-                            <label for="checkbox-fa-light-2">
+    <div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <button type="button" @click="showModal" class="btn btn-success btn-sm">
+                    <i class="fa fa-plus-square"></i> Folder
+                </button>
+                <button class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash-o"></i> Delete
+                </button>
+                <button class="btn btn-primary btn-sm">
+                    <i class="fa fa-arrows-alt"></i> Move
+                </button>
+                <button class="btn btn-primary btn-sm">
+                    <i class="fa fa-arrows-alt"></i> Rename
+                </button>
+                <button class="btn btn-warning btn-sm">
+                    <i class="fa fa-backward"></i> Back
+                </button>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Sub Directories of {{ prop_data.dir }}
+            </div>
+            <div class="panel-body">
+                <div v-show="loader" class="loader"></div>
+                <div v-show="!loader" class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th style="width: 15px">
+                                <div class="checkbox3 checkbox-success checkbox-inline checkbox-check checkbox-round checkbox-light">
+                                    <input type="checkbox" id="checkbox-fa-light-2" checked="">
+                                    <label for="checkbox-fa-light-2">
 
-                            </label>
-                        </div>
-                        <br>
-                    </th>
-                    <th>Dir Name</th>
-                    <th></th>
-                    <th>Date</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="dir in getDirList">
-                    <td>
-                        <div class="checkbox3 checkbox-danger checkbox-inline checkbox-check  checkbox-circle checkbox-light">
-                            <input type="checkbox" id="checkbox-fa-light-3" checked="">
-                            <label for="checkbox-fa-light-3">
-                            </label>
-                        </div>
-                    </td>
-                    <td>
-                        <a href="#" @click="getSubDir(dir.id,dir.sub_dir,dir.dir_path)">
+                                    </label>
+                                </div>
+                                <br>
+                            </th>
+                            <th>Dir Name</th>
+                            <th></th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="dir in getDirList">
+                            <td>
+                                <div class="checkbox3 checkbox-danger checkbox-inline checkbox-check  checkbox-circle checkbox-light">
+                                    <input type="checkbox" :id="'checkbox-fa-light-'+dir.id" v-bind:value="dir.id">
+                                    <label :for="'checkbox-fa-light-'+dir.id">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#" @click="getSubDir(dir.id,dir.sub_dir,dir.dir_path)">
                             <span class="icon text-center">
                                 <i class="fa fa-folder-o fa-2x"></i> {{ dir.sub_dir }}
                             </span>
-                        </a>
-                    </td>
-                    <td>
-                        <i class="fa fa-folder fa-1x"></i>
-                        <span class="badge">{{ dir.folders }}</span>
-                        <i class="fa fa-files-o fa-1x"></i>
-                        <span class="badge">{{ dir.files }}</span>
-                    </td>
-                    <td>{{ dir.created_at }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-    <!-- Modal Box -->
-    <div :class="'modal fade'+modalIn" id="add_folder" tabindex="-1" role="dialog" :style="modalStyle">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" @click="closeModal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">Add Sub Directories of {{ prop_data.dir }}</h4>
+                                </a>
+                            </td>
+                            <td>
+                                <i class="fa fa-folder fa-1x"></i>
+                                <span class="badge">{{ dir.folders }}</span>
+                                <i class="fa fa-files-o fa-1x"></i>
+                                <span class="badge">{{ dir.files }}</span>
+                            </td>
+                            <td>{{ dir.created_at }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+        </div>
+        <!-- Modal Box -->
+        <div :class="'modal fade'+modalIn" id="add_folder" tabindex="-1" role="dialog" :style="modalStyle">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" @click="closeModal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">Add Sub Directories of {{ prop_data.dir }}</h4>
+                    </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Directory Name</label>
@@ -92,11 +92,11 @@
                         <button type="button" class="btn btn-default" @click="closeModal">Close</button>
                         <button type="button" class="btn btn-primary" @click="saveSubDir">Save</button>
                     </div>
+                </div>
             </div>
         </div>
+        <!-- End Modal -->
     </div>
-    <!-- End Modal -->
-</div>
 </template>
 
 <script>
@@ -160,6 +160,9 @@
                         console.log(error)
                     );
             },
+            moveDir(){
+
+            },
             showModal(){
                 this.modalIn="in";
                 this.modalStyle="display: block;"
@@ -191,8 +194,10 @@
         },
         watch:{
             directory:function () {
+                this.sub_dir_id=0;
+                this.$root.container.get_dir_path='';
                 this.getDir();
-            }
+            },
         }
     }
 </script>

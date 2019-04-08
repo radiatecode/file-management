@@ -56,15 +56,15 @@
                                     <tr v-for="file in file_list">
                                         <td>
                                             <div class="checkbox3 checkbox-danger checkbox-inline checkbox-check  checkbox-circle checkbox-light">
-                                                <input type="checkbox" id="checkbox-fa-light-3" checked="">
-                                                <label for="checkbox-fa-light-3">
+                                                <input type="checkbox" :id="'checkbox-fa-light-'+file.id">
+                                                <label :for="'checkbox-fa-light-'+file.id">
                                                 </label>
                                             </div>
                                         </td>
-                                        <td v-if="file.file_extension==='JPG'">
+                                        <td v-if="file.file_type==='Images'">
                                             <img class="img-circle img-rounded img-size" :src="'/storage/'+file.file_path">
                                         </td>
-                                        <td v-if="file.file_extension==='DOCX'">
+                                        <td v-if="file.file_type==='Documents'">
                                             <span class="icon text-center">
                                                 <i class="fa fa-file-o fa-2x"></i>
                                             </span>
@@ -118,6 +118,7 @@
                         {
                             if (response.data.response==="success"){
                                 this.file_list = response.data.data;
+                                //console.log(response.data.data)
                             } else{
                                 this.response_error = response.data.data
                             }

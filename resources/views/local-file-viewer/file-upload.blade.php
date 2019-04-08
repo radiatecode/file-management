@@ -32,13 +32,11 @@
         }
         .dm-uploader.active {
             border-color: red;
-
             border-style: solid;
         }
         div#drag-and-drop-zone {
             height: 326px;
         }
-
         .p-5 {
             padding: 8rem!important;
         }
@@ -145,7 +143,6 @@
     </script>
     <script>
         $(document).ready(function () {
-
         });
     </script>
 @endsection

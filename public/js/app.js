@@ -1921,6 +1921,7 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(error);
       });
     },
+    moveDir: function moveDir() {},
     showModal: function showModal() {
       this.modalIn = "in";
       this.modalStyle = "display: block;";
@@ -1950,6 +1951,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     directory: function directory() {
+      this.sub_dir_id = 0;
+      this.$root.container.get_dir_path = '';
       this.getDir();
     }
   }
@@ -2081,7 +2084,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loader = false;
       axios.get('/get/dir/files/' + this.container.get_dir_id).then(function (response) {
         if (response.data.response === "success") {
-          _this.file_list = response.data.data;
+          _this.file_list = response.data.data; //console.log(response.data.data)
         } else {
           _this.response_error = response.data.data;
         }
@@ -22980,7 +22983,7 @@ var render = function() {
           },
           [
             _c("i", { staticClass: "fa fa-plus-square" }),
-            _vm._v(" Folder\r\n        ")
+            _vm._v(" Folder\n            ")
           ]
         ),
         _vm._v(" "),
@@ -22997,9 +23000,9 @@ var render = function() {
     _c("div", { staticClass: "panel panel-default" }, [
       _c("div", { staticClass: "panel-heading" }, [
         _vm._v(
-          "\r\n        Sub Directories of " +
+          "\n            Sub Directories of " +
             _vm._s(_vm.prop_data.dir) +
-            "\r\n    "
+            "\n        "
         )
       ]),
       _vm._v(" "),
@@ -23040,7 +23043,28 @@ var render = function() {
                   "tbody",
                   _vm._l(_vm.getDirList, function(dir) {
                     return _c("tr", [
-                      _vm._m(5, true),
+                      _c("td", [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "checkbox3 checkbox-danger checkbox-inline checkbox-check  checkbox-circle checkbox-light"
+                          },
+                          [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "checkbox-fa-light-" + dir.id
+                              },
+                              domProps: { value: dir.id }
+                            }),
+                            _vm._v(" "),
+                            _c("label", {
+                              attrs: { for: "checkbox-fa-light-" + dir.id }
+                            })
+                          ]
+                        )
+                      ]),
                       _vm._v(" "),
                       _c("td", [
                         _c(
@@ -23063,7 +23087,7 @@ var render = function() {
                               _vm._v(
                                 " " +
                                   _vm._s(dir.sub_dir) +
-                                  "\r\n                            "
+                                  "\n                        "
                               )
                             ])
                           ]
@@ -23192,7 +23216,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("button", { staticClass: "btn btn-danger btn-sm" }, [
       _c("i", { staticClass: "fa fa-trash-o" }),
-      _vm._v(" Delete\r\n        ")
+      _vm._v(" Delete\n            ")
     ])
   },
   function() {
@@ -23201,7 +23225,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("button", { staticClass: "btn btn-primary btn-sm" }, [
       _c("i", { staticClass: "fa fa-arrows-alt" }),
-      _vm._v(" Move\r\n        ")
+      _vm._v(" Move\n            ")
     ])
   },
   function() {
@@ -23210,7 +23234,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("button", { staticClass: "btn btn-primary btn-sm" }, [
       _c("i", { staticClass: "fa fa-arrows-alt" }),
-      _vm._v(" Rename\r\n        ")
+      _vm._v(" Rename\n            ")
     ])
   },
   function() {
@@ -23219,7 +23243,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("button", { staticClass: "btn btn-warning btn-sm" }, [
       _c("i", { staticClass: "fa fa-backward" }),
-      _vm._v(" Back\r\n        ")
+      _vm._v(" Back\n            ")
     ])
   },
   function() {
@@ -23257,27 +23281,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Date")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "div",
-        {
-          staticClass:
-            "checkbox3 checkbox-danger checkbox-inline checkbox-check  checkbox-circle checkbox-light"
-        },
-        [
-          _c("input", {
-            attrs: { type: "checkbox", id: "checkbox-fa-light-3", checked: "" }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "checkbox-fa-light-3" } })
-        ]
-      )
     ])
   }
 ]
@@ -23384,9 +23387,31 @@ var render = function() {
                           "tbody",
                           _vm._l(_vm.file_list, function(file) {
                             return _c("tr", [
-                              _vm._m(7, true),
+                              _c("td", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "checkbox3 checkbox-danger checkbox-inline checkbox-check  checkbox-circle checkbox-light"
+                                  },
+                                  [
+                                    _c("input", {
+                                      attrs: {
+                                        type: "checkbox",
+                                        id: "checkbox-fa-light-" + file.id
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("label", {
+                                      attrs: {
+                                        for: "checkbox-fa-light-" + file.id
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]),
                               _vm._v(" "),
-                              file.file_extension === "JPG"
+                              file.file_type === "Images"
                                 ? _c("td", [
                                     _c("img", {
                                       staticClass:
@@ -23398,8 +23423,8 @@ var render = function() {
                                   ])
                                 : _vm._e(),
                               _vm._v(" "),
-                              file.file_extension === "DOCX"
-                                ? _c("td", [_vm._m(8, true)])
+                              file.file_type === "Documents"
+                                ? _c("td", [_vm._m(7, true)])
                                 : _vm._e(),
                               _vm._v(" "),
                               _c("td", [
@@ -23528,27 +23553,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Created Date")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "div",
-        {
-          staticClass:
-            "checkbox3 checkbox-danger checkbox-inline checkbox-check  checkbox-circle checkbox-light"
-        },
-        [
-          _c("input", {
-            attrs: { type: "checkbox", id: "checkbox-fa-light-3", checked: "" }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "checkbox-fa-light-3" } })
-        ]
-      )
     ])
   },
   function() {
