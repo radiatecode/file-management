@@ -60,10 +60,10 @@ class FileViewerController extends Controller
         return response()->json($response,201);
     }
 
-    public function getRootDir(){
-        $rootDir = Storage::directories("Radiate");
-        return response()->json($rootDir,201);
-    }
+//    public function getRootDir(){
+//        $rootDir = Storage::directories("Radiate");
+//        return response()->json($rootDir,201);
+//    }
 
     public function getDir($root_id){
         $dirData = [];
@@ -140,5 +140,29 @@ class FileViewerController extends Controller
                 ]);
             }
 
+    }
+
+    public function getRootDir(){
+        $rootDir = FileType::orderBy('dir_name','ASC')->get();
+        return response()->json($rootDir,201);
+    }
+
+    public function moveDir(Request $request){
+        $dirs = $request->selected_dirs;
+        foreach ($dirs as $id){
+            $directory = Directory::find($id);
+            $directory->root_dir_id = $request->root_dir_id;
+            $directory->sub_dir_id = $request->sub_dir_id;
+            if ($request->sub_dir_id!=0){
+                $subDir = Directory::find($request->sub_dir_id);
+                $directory->dir_path = $subDir->dir_path."/".$directory->sub_dir;
+            }else{
+                $rootDir = FileType::find($request->root_dir_id);
+                $directory->dir_path = $rootDir->dir_path."/".$directory->sub_dir;
+            }
+            $directory->save();
+            // here move the directory from storage by storage class
+        }
+        return response()->json('success',201);
     }
 }

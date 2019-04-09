@@ -25,7 +25,7 @@ Route::post("/add/sub/dir","FileViewerController@addSubDir");
 Route::get("/get/root/dir","FileViewerController@getRootDir");
 Route::get("/get/dir/{root_id}","FileViewerController@getDir");
 Route::get("/get/sub/dir/{sub_dir_id}","FileViewerController@getSubDir");
-
+Route::post("/move/dir","FileViewerController@moveDir")->name('move.dir');
 //Route::get("/get/directory/files","FileViewerController@getFiles");
 
 Route::get('/file/types','SetupController@fileTypeList');

@@ -1864,25 +1864,117 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Directories",
   data: function data() {
     return {
       loader: true,
-      modalStyle: "display: none;",
-      modalIn: "",
+      small_loader: true,
+      modal: {
+        folderModalStyle: "display: none;",
+        moveModalStyle: "display: none;",
+        folderModalIn: "",
+        moveModalIn: ""
+      },
       dir_list: {},
       dir_name: '',
       sub_dir_id: 0,
       prop_data: {
         dir: '',
         dir_path: ''
-      }
+      },
+      move_dir: {
+        root_id: 0,
+        sub_id: 0,
+        dir: '',
+        dir_path: '',
+        error: '',
+        selected_dir: []
+      },
+      root_dir_list: {},
+      sub_dir_list: {}
     };
   },
   props: ['directory', 'root_dir_id', 'dir_path'],
   mounted: function mounted() {
     this.getDir();
+    this.getRootDir();
   },
   methods: {
     getSubDir: function getSubDir(id, dir, dir_path) {
@@ -1921,14 +2013,87 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(error);
       });
     },
-    moveDir: function moveDir() {},
-    showModal: function showModal() {
-      this.modalIn = "in";
-      this.modalStyle = "display: block;";
+    getDirectory: function getDirectory(root_dir_id, dir, dir_path) {
+      var _this3 = this;
+
+      this.small_loader = true;
+      this.move_dir.dir = dir;
+      this.move_dir.dir_path = dir_path;
+      this.move_dir.root_id = root_dir_id;
+      this.move_dir.sub_id = 0;
+      axios.get('/get/dir/' + root_dir_id).then(function (response) {
+        _this3.small_loader = false;
+        _this3.sub_dir_list = response.data;
+      }).catch(function (error) {
+        return console.log(error);
+      });
     },
-    closeModal: function closeModal() {
-      this.modalIn = "";
-      this.modalStyle = "display: none;";
+    getSubDirectory: function getSubDirectory(id, dir, dir_path) {
+      var _this4 = this;
+
+      this.small_loader = true;
+      this.move_dir.dir = dir;
+      this.move_dir.dir_path = dir_path;
+      this.move_dir.sub_id = id;
+      axios.get('/get/sub/dir/' + id).then(function (response) {
+        _this4.small_loader = false;
+
+        if (response.data.length === 0) {
+          _this4.move_dir.error = "No Folder Or Dir Found";
+        } else {
+          _this4.sub_dir_list = response.data;
+        } //console.log(response.data)
+
+      }).catch(function (error) {
+        return console.log(error);
+      });
+    },
+    getRootDir: function getRootDir() {
+      var _this5 = this;
+
+      axios.get('/get/root/dir/').then(function (response) {
+        _this5.root_dir_list = response.data;
+        console.log(_this5.root_dir_list);
+      }).catch(function (error) {
+        return console.log(error);
+      });
+    },
+    moveDir: function moveDir() {
+      var data = {
+        root_dir_id: this.move_dir.root_id,
+        sub_dir_id: this.move_dir.sub_id,
+        selected_dirs: this.move_dir.selected_dir
+      };
+      console.log(data);
+
+      if (this.move_dir.selected_dir.length > 0) {
+        axios.post('/move/dir', data).then(function (response) {
+          console.log(response.data);
+        }).catch(function (error) {
+          return console.log(error);
+        });
+      } else {
+        alert('nor dir selected to move');
+      }
+    },
+    showFolderModal: function showFolderModal() {
+      this.modal.folderModalIn = "in";
+      this.modal.folderModalStyle = "display: block;";
+    },
+    closeFolderModal: function closeFolderModal() {
+      this.modal.folderModalIn = "";
+      this.modal.folderModalStyle = "display: none;";
+    },
+    showMoveModal: function showMoveModal() {
+      this.modal.moveModalIn = "in";
+      this.modal.moveModalStyle = "display: block;";
+    },
+    closeMoveModal: function closeMoveModal() {
+      this.sub_dir_list = {};
+      this.small_loader = true;
+      this.move_dir.error = '';
+      this.modal.moveModalIn = "";
+      this.modal.moveModalStyle = "display: none;";
     },
     saveSubDir: function saveSubDir() {
       var data = {
@@ -22979,7 +23144,7 @@ var render = function() {
           {
             staticClass: "btn btn-success btn-sm",
             attrs: { type: "button" },
-            on: { click: _vm.showModal }
+            on: { click: _vm.showFolderModal }
           },
           [
             _c("i", { staticClass: "fa fa-plus-square" }),
@@ -22989,11 +23154,21 @@ var render = function() {
         _vm._v(" "),
         _vm._m(0),
         _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary btn-sm",
+            on: { click: _vm.showMoveModal }
+          },
+          [
+            _c("i", { staticClass: "fa fa-arrows-alt" }),
+            _vm._v(" Move\n            ")
+          ]
+        ),
+        _vm._v(" "),
         _vm._m(1),
         _vm._v(" "),
-        _vm._m(2),
-        _vm._v(" "),
-        _vm._m(3)
+        _vm._m(2)
       ])
     ]),
     _vm._v(" "),
@@ -23037,7 +23212,7 @@ var render = function() {
               "table",
               { staticClass: "table table-striped table-bordered table-hover" },
               [
-                _vm._m(4),
+                _vm._m(3),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -23052,11 +23227,57 @@ var render = function() {
                           },
                           [
                             _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.move_dir.selected_dir,
+                                  expression: "move_dir.selected_dir"
+                                }
+                              ],
                               attrs: {
                                 type: "checkbox",
                                 id: "checkbox-fa-light-" + dir.id
                               },
-                              domProps: { value: dir.id }
+                              domProps: {
+                                value: dir.id,
+                                checked: Array.isArray(
+                                  _vm.move_dir.selected_dir
+                                )
+                                  ? _vm._i(_vm.move_dir.selected_dir, dir.id) >
+                                    -1
+                                  : _vm.move_dir.selected_dir
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$a = _vm.move_dir.selected_dir,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = dir.id,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        _vm.$set(
+                                          _vm.move_dir,
+                                          "selected_dir",
+                                          $$a.concat([$$v])
+                                        )
+                                    } else {
+                                      $$i > -1 &&
+                                        _vm.$set(
+                                          _vm.move_dir,
+                                          "selected_dir",
+                                          $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1))
+                                        )
+                                    }
+                                  } else {
+                                    _vm.$set(_vm.move_dir, "selected_dir", $$c)
+                                  }
+                                }
+                              }
                             }),
                             _vm._v(" "),
                             _c("label", {
@@ -23087,7 +23308,7 @@ var render = function() {
                               _vm._v(
                                 " " +
                                   _vm._s(dir.sub_dir) +
-                                  "\n                        "
+                                  "\n                                "
                               )
                             ])
                           ]
@@ -23123,8 +23344,8 @@ var render = function() {
     _c(
       "div",
       {
-        class: "modal fade" + _vm.modalIn,
-        style: _vm.modalStyle,
+        class: "modal fade" + _vm.modal.folderModalIn,
+        style: _vm.modal.folderModalStyle,
         attrs: { id: "add_folder", tabindex: "-1", role: "dialog" }
       },
       [
@@ -23136,7 +23357,7 @@ var render = function() {
                 {
                   staticClass: "close",
                   attrs: { type: "button", "aria-hidden": "true" },
-                  on: { click: _vm.closeModal }
+                  on: { click: _vm.closeFolderModal }
                 },
                 [_vm._v("×")]
               ),
@@ -23188,7 +23409,7 @@ var render = function() {
                 {
                   staticClass: "btn btn-default",
                   attrs: { type: "button" },
-                  on: { click: _vm.closeModal }
+                  on: { click: _vm.closeFolderModal }
                 },
                 [_vm._v("Close")]
               ),
@@ -23199,6 +23420,228 @@ var render = function() {
                   staticClass: "btn btn-primary",
                   attrs: { type: "button" },
                   on: { click: _vm.saveSubDir }
+                },
+                [_vm._v("Save")]
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        class: "modal fade" + _vm.modal.moveModalIn,
+        style: _vm.modal.moveModalStyle,
+        attrs: { id: "move_folder", tabindex: "-1", role: "dialog" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: { type: "button", "aria-hidden": "true" },
+                  on: { click: _vm.closeMoveModal }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("h4", { staticClass: "modal-title" }, [_vm._v("Move Folder")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.move_dir.error,
+                      expression: "move_dir.error"
+                    }
+                  ],
+                  staticClass: "row"
+                },
+                [
+                  _c("div", { staticClass: "col-md-12 col-sm-12 col-xs-12" }, [
+                    _c("label", { staticClass: "alert alert-danger" }, [
+                      _vm._v(
+                        _vm._s(_vm.move_dir.error) +
+                          " For " +
+                          _vm._s(_vm.move_dir.dir) +
+                          " Folder"
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12 col-sm-12 col-xs-12" }, [
+                  _c("label", { staticClass: "alert alert-danger" }, [
+                    _vm._v("Move To > " + _vm._s(_vm.move_dir.dir))
+                  ]),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "alert alert-info" }, [
+                    _vm._v("Path > " + _vm._s(_vm.move_dir.dir_path))
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-3 col-sm-12 col-xs-12" }, [
+                  _c("div", { staticClass: "panel panel-default" }, [
+                    _c("div", { staticClass: "panel-heading" }, [
+                      _vm._v(
+                        "\n                                    Root Folders\n                                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "panel-body" }, [
+                      _c(
+                        "div",
+                        { staticClass: "list-group" },
+                        _vm._l(_vm.root_dir_list, function(root_dir) {
+                          return _c(
+                            "a",
+                            {
+                              staticClass: "list-group-item",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.getDirectory(
+                                    root_dir.id,
+                                    root_dir.dir_name,
+                                    root_dir.dir_path
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-fw fa-folder-o" }),
+                              _vm._v(
+                                " " +
+                                  _vm._s(root_dir.dir_name) +
+                                  "\n                                        "
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3 col-sm-12 col-xs-12" }, [
+                  _c("div", { staticClass: "panel panel-default" }, [
+                    _c("div", { staticClass: "panel-heading" }, [
+                      _vm._v(
+                        "\n                                    Sub Folders\n                                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "panel-body" }, [
+                      _c("div", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.small_loader,
+                            expression: "small_loader"
+                          }
+                        ],
+                        staticClass: "small_loader"
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "table",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.small_loader,
+                              expression: "!small_loader"
+                            }
+                          ],
+                          staticClass:
+                            "table table-striped table-bordered table-hover"
+                        },
+                        [
+                          _vm._m(4),
+                          _vm._v(" "),
+                          _c(
+                            "tbody",
+                            _vm._l(_vm.sub_dir_list, function(sub_dir) {
+                              return _c("tr", [
+                                _c("td", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.getSubDirectory(
+                                            sub_dir.id,
+                                            sub_dir.sub_dir,
+                                            sub_dir.dir_path
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { staticClass: "icon text-center" },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fa fa-folder-o fa-2x"
+                                          }),
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(sub_dir.sub_dir) +
+                                              "\n                                                        "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            }),
+                            0
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: { type: "button" },
+                  on: { click: _vm.closeMoveModal }
+                },
+                [_vm._v("Close")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: { click: _vm.moveDir }
                 },
                 [_vm._v("Save")]
               )
@@ -23217,15 +23660,6 @@ var staticRenderFns = [
     return _c("button", { staticClass: "btn btn-danger btn-sm" }, [
       _c("i", { staticClass: "fa fa-trash-o" }),
       _vm._v(" Delete\n            ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-primary btn-sm" }, [
-      _c("i", { staticClass: "fa fa-arrows-alt" }),
-      _vm._v(" Move\n            ")
     ])
   },
   function() {
@@ -23282,6 +23716,12 @@ var staticRenderFns = [
         _c("th", [_vm._v("Date")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [_c("tr", [_c("th", [_vm._v("Dir Name")])])])
   }
 ]
 render._withStripped = true
