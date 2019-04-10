@@ -1864,93 +1864,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Directories",
   data: function data() {
     return {
       loader: true,
-      small_loader: true,
       modal: {
         folderModalStyle: "display: none;",
-        moveModalStyle: "display: none;",
-        folderModalIn: "",
-        moveModalIn: ""
+        folderModalIn: ""
       },
       dir_list: {},
       dir_name: '',
@@ -1959,22 +1880,20 @@ __webpack_require__.r(__webpack_exports__);
         dir: '',
         dir_path: ''
       },
+      selected_dirs: [],
       move_dir: {
         root_id: 0,
-        sub_id: 0,
+        dir_id: 0,
         dir: '',
         dir_path: '',
         error: '',
-        selected_dir: []
-      },
-      root_dir_list: {},
-      sub_dir_list: {}
+        selected_files: []
+      }
     };
   },
   props: ['directory', 'root_dir_id', 'dir_path'],
   mounted: function mounted() {
     this.getDir();
-    this.getRootDir();
   },
   methods: {
     getSubDir: function getSubDir(id, dir, dir_path) {
@@ -2013,69 +1932,6 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(error);
       });
     },
-    getDirectory: function getDirectory(root_dir_id, dir, dir_path) {
-      var _this3 = this;
-
-      this.small_loader = true;
-      this.move_dir.dir = dir;
-      this.move_dir.dir_path = dir_path;
-      this.move_dir.root_id = root_dir_id;
-      this.move_dir.sub_id = 0;
-      axios.get('/get/dir/' + root_dir_id).then(function (response) {
-        _this3.small_loader = false;
-        _this3.sub_dir_list = response.data;
-      }).catch(function (error) {
-        return console.log(error);
-      });
-    },
-    getSubDirectory: function getSubDirectory(id, dir, dir_path) {
-      var _this4 = this;
-
-      this.small_loader = true;
-      this.move_dir.dir = dir;
-      this.move_dir.dir_path = dir_path;
-      this.move_dir.sub_id = id;
-      axios.get('/get/sub/dir/' + id).then(function (response) {
-        _this4.small_loader = false;
-
-        if (response.data.length === 0) {
-          _this4.move_dir.error = "No Folder Or Dir Found";
-        } else {
-          _this4.sub_dir_list = response.data;
-        } //console.log(response.data)
-
-      }).catch(function (error) {
-        return console.log(error);
-      });
-    },
-    getRootDir: function getRootDir() {
-      var _this5 = this;
-
-      axios.get('/get/root/dir/').then(function (response) {
-        _this5.root_dir_list = response.data;
-        console.log(_this5.root_dir_list);
-      }).catch(function (error) {
-        return console.log(error);
-      });
-    },
-    moveDir: function moveDir() {
-      var data = {
-        root_dir_id: this.move_dir.root_id,
-        sub_dir_id: this.move_dir.sub_id,
-        selected_dirs: this.move_dir.selected_dir
-      };
-      console.log(data);
-
-      if (this.move_dir.selected_dir.length > 0) {
-        axios.post('/move/dir', data).then(function (response) {
-          console.log(response.data);
-        }).catch(function (error) {
-          return console.log(error);
-        });
-      } else {
-        alert('nor dir selected to move');
-      }
-    },
     showFolderModal: function showFolderModal() {
       this.modal.folderModalIn = "in";
       this.modal.folderModalStyle = "display: block;";
@@ -2083,17 +1939,6 @@ __webpack_require__.r(__webpack_exports__);
     closeFolderModal: function closeFolderModal() {
       this.modal.folderModalIn = "";
       this.modal.folderModalStyle = "display: none;";
-    },
-    showMoveModal: function showMoveModal() {
-      this.modal.moveModalIn = "in";
-      this.modal.moveModalStyle = "display: block;";
-    },
-    closeMoveModal: function closeMoveModal() {
-      this.sub_dir_list = {};
-      this.small_loader = true;
-      this.move_dir.error = '';
-      this.modal.moveModalIn = "";
-      this.modal.moveModalStyle = "display: none;";
     },
     saveSubDir: function saveSubDir() {
       var data = {
@@ -2228,19 +2073,109 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "FileViewer",
+  name: "FileViewerInterface",
   data: function data() {
     return {
       loader: true,
       file_list: {},
-      response_error: 'null'
+      modal: {
+        moveModalStyle: "display: none;",
+        moveModalIn: ""
+      },
+      response_error: 'null',
+      small_loader: true,
+      move_files: {
+        dir_id: 0,
+        dir: '',
+        dir_path: '',
+        selected_files: []
+      },
+      root_dir_list: {},
+      sub_dir_list: {}
     };
   },
   props: ['container', 'change_dir'],
   mounted: function mounted() {
     //console.log(this.container)
     this.getFiles();
+    this.getRootDir();
   },
   methods: {
     getFiles: function getFiles() {
@@ -2259,6 +2194,76 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (error) {
         return console.log(error);
       }); //console.log("hello "+this.container.get_dir_id);
+    },
+    getRootDir: function getRootDir() {
+      var _this2 = this;
+
+      axios.get('/get/root/dir/').then(function (response) {
+        _this2.root_dir_list = response.data; //console.log(this.root_dir_list)
+      }).catch(function (error) {
+        return console.log(error);
+      });
+    },
+    getDirectory: function getDirectory(root_dir_id, dir, dir_path) {
+      var _this3 = this;
+
+      this.small_loader = true;
+      this.move_files.dir = dir;
+      this.move_files.dir_path = dir_path;
+      this.move_files.dir_id = 0;
+      axios.get('/get/dir/' + root_dir_id).then(function (response) {
+        _this3.small_loader = false;
+        _this3.sub_dir_list = response.data;
+      }).catch(function (error) {
+        return console.log(error);
+      });
+    },
+    getSubDirectory: function getSubDirectory(id, dir, dir_path) {
+      var _this4 = this;
+
+      this.small_loader = true;
+      this.move_files.dir = dir;
+      this.move_files.dir_path = dir_path;
+      this.move_files.dir_id = id;
+      axios.get('/get/sub/dir/' + id).then(function (response) {
+        _this4.small_loader = false;
+
+        if (response.data.length === 0) {
+          alert('no dir');
+        } else {
+          _this4.sub_dir_list = response.data;
+        } //console.log(response.data)
+
+      }).catch(function (error) {
+        return console.log(error);
+      });
+    },
+    moveFiles: function moveFiles() {
+      var data = {
+        move_dir_id: this.move_files.dir_id,
+        selected_files: this.move_files.selected_files
+      };
+
+      if (this.move_files.selected_files.length > 0) {
+        axios.post('/move/files', data).then(function (response) {
+          console.log(response.data);
+        }).catch(function (error) {
+          return console.log(error);
+        });
+      } else {
+        alert('No Dir Selected To Move');
+      }
+    },
+    showMoveModal: function showMoveModal() {
+      this.modal.moveModalIn = "in";
+      this.modal.moveModalStyle = "display: block;";
+    },
+    closeMoveModal: function closeMoveModal() {
+      this.sub_dir_list = {};
+      this.small_loader = true;
+      this.move_files.dir_id = 0;
+      this.modal.moveModalIn = "";
+      this.modal.moveModalStyle = "display: none;";
     }
   },
   watch: {
@@ -23154,21 +23159,7 @@ var render = function() {
         _vm._v(" "),
         _vm._m(0),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary btn-sm",
-            on: { click: _vm.showMoveModal }
-          },
-          [
-            _c("i", { staticClass: "fa fa-arrows-alt" }),
-            _vm._v(" Move\n            ")
-          ]
-        ),
-        _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _vm._m(2)
+        _vm._m(1)
       ])
     ]),
     _vm._v(" "),
@@ -23212,7 +23203,7 @@ var render = function() {
               "table",
               { staticClass: "table table-striped table-bordered table-hover" },
               [
-                _vm._m(3),
+                _vm._m(2),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -23231,8 +23222,8 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.move_dir.selected_dir,
-                                  expression: "move_dir.selected_dir"
+                                  value: _vm.selected_dirs,
+                                  expression: "selected_dirs"
                                 }
                               ],
                               attrs: {
@@ -23241,16 +23232,13 @@ var render = function() {
                               },
                               domProps: {
                                 value: dir.id,
-                                checked: Array.isArray(
-                                  _vm.move_dir.selected_dir
-                                )
-                                  ? _vm._i(_vm.move_dir.selected_dir, dir.id) >
-                                    -1
-                                  : _vm.move_dir.selected_dir
+                                checked: Array.isArray(_vm.selected_dirs)
+                                  ? _vm._i(_vm.selected_dirs, dir.id) > -1
+                                  : _vm.selected_dirs
                               },
                               on: {
                                 change: function($event) {
-                                  var $$a = _vm.move_dir.selected_dir,
+                                  var $$a = _vm.selected_dirs,
                                     $$el = $event.target,
                                     $$c = $$el.checked ? true : false
                                   if (Array.isArray($$a)) {
@@ -23258,23 +23246,15 @@ var render = function() {
                                       $$i = _vm._i($$a, $$v)
                                     if ($$el.checked) {
                                       $$i < 0 &&
-                                        _vm.$set(
-                                          _vm.move_dir,
-                                          "selected_dir",
-                                          $$a.concat([$$v])
-                                        )
+                                        (_vm.selected_dirs = $$a.concat([$$v]))
                                     } else {
                                       $$i > -1 &&
-                                        _vm.$set(
-                                          _vm.move_dir,
-                                          "selected_dir",
-                                          $$a
-                                            .slice(0, $$i)
-                                            .concat($$a.slice($$i + 1))
-                                        )
+                                        (_vm.selected_dirs = $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1)))
                                     }
                                   } else {
-                                    _vm.$set(_vm.move_dir, "selected_dir", $$c)
+                                    _vm.selected_dirs = $$c
                                   }
                                 }
                               }
@@ -23329,7 +23309,9 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(dir.created_at))])
+                      _c("td", [_vm._v(_vm._s(dir.created_at))]),
+                      _vm._v(" "),
+                      _vm._m(3, true)
                     ])
                   }),
                   0
@@ -23427,228 +23409,6 @@ var render = function() {
           ])
         ])
       ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        class: "modal fade" + _vm.modal.moveModalIn,
-        style: _vm.modal.moveModalStyle,
-        attrs: { id: "move_folder", tabindex: "-1", role: "dialog" }
-      },
-      [
-        _c("div", { staticClass: "modal-dialog modal-lg" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _c("div", { staticClass: "modal-header" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "close",
-                  attrs: { type: "button", "aria-hidden": "true" },
-                  on: { click: _vm.closeMoveModal }
-                },
-                [_vm._v("×")]
-              ),
-              _vm._v(" "),
-              _c("h4", { staticClass: "modal-title" }, [_vm._v("Move Folder")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-body" }, [
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.move_dir.error,
-                      expression: "move_dir.error"
-                    }
-                  ],
-                  staticClass: "row"
-                },
-                [
-                  _c("div", { staticClass: "col-md-12 col-sm-12 col-xs-12" }, [
-                    _c("label", { staticClass: "alert alert-danger" }, [
-                      _vm._v(
-                        _vm._s(_vm.move_dir.error) +
-                          " For " +
-                          _vm._s(_vm.move_dir.dir) +
-                          " Folder"
-                      )
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12 col-sm-12 col-xs-12" }, [
-                  _c("label", { staticClass: "alert alert-danger" }, [
-                    _vm._v("Move To > " + _vm._s(_vm.move_dir.dir))
-                  ]),
-                  _vm._v(" "),
-                  _c("label", { staticClass: "alert alert-info" }, [
-                    _vm._v("Path > " + _vm._s(_vm.move_dir.dir_path))
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3 col-sm-12 col-xs-12" }, [
-                  _c("div", { staticClass: "panel panel-default" }, [
-                    _c("div", { staticClass: "panel-heading" }, [
-                      _vm._v(
-                        "\n                                    Root Folders\n                                "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "panel-body" }, [
-                      _c(
-                        "div",
-                        { staticClass: "list-group" },
-                        _vm._l(_vm.root_dir_list, function(root_dir) {
-                          return _c(
-                            "a",
-                            {
-                              staticClass: "list-group-item",
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.getDirectory(
-                                    root_dir.id,
-                                    root_dir.dir_name,
-                                    root_dir.dir_path
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c("i", { staticClass: "fa fa-fw fa-folder-o" }),
-                              _vm._v(
-                                " " +
-                                  _vm._s(root_dir.dir_name) +
-                                  "\n                                        "
-                              )
-                            ]
-                          )
-                        }),
-                        0
-                      )
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3 col-sm-12 col-xs-12" }, [
-                  _c("div", { staticClass: "panel panel-default" }, [
-                    _c("div", { staticClass: "panel-heading" }, [
-                      _vm._v(
-                        "\n                                    Sub Folders\n                                "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "panel-body" }, [
-                      _c("div", {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.small_loader,
-                            expression: "small_loader"
-                          }
-                        ],
-                        staticClass: "small_loader"
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "table",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: !_vm.small_loader,
-                              expression: "!small_loader"
-                            }
-                          ],
-                          staticClass:
-                            "table table-striped table-bordered table-hover"
-                        },
-                        [
-                          _vm._m(4),
-                          _vm._v(" "),
-                          _c(
-                            "tbody",
-                            _vm._l(_vm.sub_dir_list, function(sub_dir) {
-                              return _c("tr", [
-                                _c("td", [
-                                  _c(
-                                    "a",
-                                    {
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.getSubDirectory(
-                                            sub_dir.id,
-                                            sub_dir.sub_dir,
-                                            sub_dir.dir_path
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "span",
-                                        { staticClass: "icon text-center" },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fa fa-folder-o fa-2x"
-                                          }),
-                                          _vm._v(
-                                            " " +
-                                              _vm._s(sub_dir.sub_dir) +
-                                              "\n                                                        "
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ])
-                            }),
-                            0
-                          )
-                        ]
-                      )
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-default",
-                  attrs: { type: "button" },
-                  on: { click: _vm.closeMoveModal }
-                },
-                [_vm._v("Close")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { type: "button" },
-                  on: { click: _vm.moveDir }
-                },
-                [_vm._v("Save")]
-              )
-            ])
-          ])
-        ])
-      ]
     )
   ])
 }
@@ -23660,15 +23420,6 @@ var staticRenderFns = [
     return _c("button", { staticClass: "btn btn-danger btn-sm" }, [
       _c("i", { staticClass: "fa fa-trash-o" }),
       _vm._v(" Delete\n            ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-primary btn-sm" }, [
-      _c("i", { staticClass: "fa fa-arrows-alt" }),
-      _vm._v(" Rename\n            ")
     ])
   },
   function() {
@@ -23713,7 +23464,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th"),
         _vm._v(" "),
-        _c("th", [_vm._v("Date")])
+        _c("th", [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
       ])
     ])
   },
@@ -23721,7 +23474,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [_c("tr", [_c("th", [_vm._v("Dir Name")])])])
+    return _c("td", [
+      _c("button", { staticClass: "bt btn-info btn-xs" }, [
+        _c("i", { staticClass: "fa fa-edit" })
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "bt btn-danger btn-xs" }, [
+        _c("i", { staticClass: "fa fa-trash-o" })
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -23788,20 +23549,30 @@ var render = function() {
           _vm._v(" "),
           _vm._m(1),
           _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn-sm",
+              on: { click: _vm.showMoveModal }
+            },
+            [
+              _c("i", { staticClass: "fa fa-arrows-alt" }),
+              _vm._v(" Move\n            ")
+            ]
+          ),
+          _vm._v(" "),
           _vm._m(2),
           _vm._v(" "),
           _vm._m(3),
           _vm._v(" "),
-          _vm._m(4),
-          _vm._v(" "),
-          _vm._m(5)
+          _vm._m(4)
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-12 col-sm-12 col-xs-12" }, [
           _c("div", { staticClass: "panel panel-default" }, [
             _c("div", { staticClass: "panel-heading" }, [
               _vm._v(
-                "\n                    Files Container " +
+                "\n                    Files Container | Directory: " +
                   _vm._s(_vm.container.get_dir_name) +
                   "\n                "
               )
@@ -23820,7 +23591,7 @@ var render = function() {
                     }
                   },
                   [
-                    _vm._m(6),
+                    _vm._m(5),
                     _vm._v(" "),
                     _vm.response_error === "null"
                       ? _c(
@@ -23836,15 +23607,76 @@ var render = function() {
                                   },
                                   [
                                     _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.move_files.selected_files,
+                                          expression:
+                                            "move_files.selected_files"
+                                        }
+                                      ],
                                       attrs: {
                                         type: "checkbox",
-                                        id: "checkbox-fa-light-" + file.id
+                                        id:
+                                          "checkbox-fa-light-" +
+                                          file.id +
+                                          "-file"
+                                      },
+                                      domProps: {
+                                        value: file.id,
+                                        checked: Array.isArray(
+                                          _vm.move_files.selected_files
+                                        )
+                                          ? _vm._i(
+                                              _vm.move_files.selected_files,
+                                              file.id
+                                            ) > -1
+                                          : _vm.move_files.selected_files
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a =
+                                              _vm.move_files.selected_files,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = file.id,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.move_files,
+                                                  "selected_files",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.move_files,
+                                                  "selected_files",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.move_files,
+                                              "selected_files",
+                                              $$c
+                                            )
+                                          }
+                                        }
                                       }
                                     }),
                                     _vm._v(" "),
                                     _c("label", {
                                       attrs: {
-                                        for: "checkbox-fa-light-" + file.id
+                                        for:
+                                          "checkbox-fa-light-" +
+                                          file.id +
+                                          "-file"
                                       }
                                     })
                                   ]
@@ -23864,7 +23696,7 @@ var render = function() {
                                 : _vm._e(),
                               _vm._v(" "),
                               file.file_type === "Documents"
-                                ? _c("td", [_vm._m(7, true)])
+                                ? _c("td", [_vm._m(6, true)])
                                 : _vm._e(),
                               _vm._v(" "),
                               _c("td", [
@@ -23879,7 +23711,9 @@ var render = function() {
                               _vm._v(" "),
                               _c("td", [_vm._v("555kb")]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(file.created_at))])
+                              _c("td", [_vm._v(_vm._s(file.created_at))]),
+                              _vm._v(" "),
+                              _vm._m(7, true)
                             ])
                           }),
                           0
@@ -23896,7 +23730,211 @@ var render = function() {
               ])
             ])
           ])
-        ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            class: "modal fade" + _vm.modal.moveModalIn,
+            style: _vm.modal.moveModalStyle,
+            attrs: { id: "move_folder", tabindex: "-1", role: "dialog" }
+          },
+          [
+            _c("div", { staticClass: "modal-dialog modal-lg" }, [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: { type: "button", "aria-hidden": "true" },
+                      on: { click: _vm.closeMoveModal }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(" "),
+                  _c("h4", { staticClass: "modal-title" }, [
+                    _vm._v("Move Folder")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-md-12 col-sm-12 col-xs-12" },
+                      [
+                        _c("label", { staticClass: "alert alert-danger" }, [
+                          _vm._v("Move To > " + _vm._s(_vm.move_files.dir))
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "alert alert-info" }, [
+                          _vm._v("Path > " + _vm._s(_vm.move_files.dir_path))
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-3 col-sm-12 col-xs-12" }, [
+                      _c("div", { staticClass: "panel panel-default" }, [
+                        _c("div", { staticClass: "panel-heading" }, [
+                          _vm._v(
+                            "\n                                        Root Folders\n                                    "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "panel-body" }, [
+                          _c(
+                            "div",
+                            { staticClass: "list-group" },
+                            _vm._l(_vm.root_dir_list, function(root_dir) {
+                              return _c(
+                                "a",
+                                {
+                                  staticClass: "list-group-item",
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.getDirectory(
+                                        root_dir.id,
+                                        root_dir.dir_name,
+                                        root_dir.dir_path
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fa fa-fw fa-folder-o"
+                                  }),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(root_dir.dir_name) +
+                                      "\n                                            "
+                                  )
+                                ]
+                              )
+                            }),
+                            0
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-3 col-sm-12 col-xs-12" }, [
+                      _c("div", { staticClass: "panel panel-default" }, [
+                        _c("div", { staticClass: "panel-heading" }, [
+                          _vm._v(
+                            "\n                                        Sub Folders\n                                    "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "panel-body" }, [
+                          _c("div", {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.small_loader,
+                                expression: "small_loader"
+                              }
+                            ],
+                            staticClass: "small_loader"
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "table",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: !_vm.small_loader,
+                                  expression: "!small_loader"
+                                }
+                              ],
+                              staticClass:
+                                "table table-striped table-bordered table-hover"
+                            },
+                            [
+                              _vm._m(8),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.sub_dir_list, function(sub_dir) {
+                                  return _c("tr", [
+                                    _c("td", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.getSubDirectory(
+                                                sub_dir.id,
+                                                sub_dir.sub_dir,
+                                                sub_dir.dir_path
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "span",
+                                            { staticClass: "icon text-center" },
+                                            [
+                                              _c("i", {
+                                                staticClass:
+                                                  "fa fa-folder-o fa-2x"
+                                              }),
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(sub_dir.sub_dir) +
+                                                  "\n                                                        "
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default",
+                      attrs: { type: "button" },
+                      on: { click: _vm.closeMoveModal }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: { click: _vm.moveFiles }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
       ]
     )
   ])
@@ -23918,15 +23956,6 @@ var staticRenderFns = [
     return _c("button", { staticClass: "btn btn-danger btn-sm" }, [
       _c("i", { staticClass: "fa fa-trash-o" }),
       _vm._v(" Delete\n            ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-primary btn-sm" }, [
-      _c("i", { staticClass: "fa fa-arrows-alt" }),
-      _vm._v(" Move\n            ")
     ])
   },
   function() {
@@ -23991,7 +24020,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Size")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Created Date")])
+        _c("th", [_vm._v("Created Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
       ])
     ])
   },
@@ -24002,6 +24033,26 @@ var staticRenderFns = [
     return _c("span", { staticClass: "icon text-center" }, [
       _c("i", { staticClass: "fa fa-file-o fa-2x" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("button", { staticClass: "bt btn-info btn-xs" }, [
+        _c("i", { staticClass: "fa fa-edit" })
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "bt btn-danger btn-xs" }, [
+        _c("i", { staticClass: "fa fa-trash-o" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [_c("tr", [_c("th", [_vm._v("Dir Name")])])])
   }
 ]
 render._withStripped = true
