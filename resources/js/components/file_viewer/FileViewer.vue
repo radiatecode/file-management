@@ -3,7 +3,7 @@
         <div v-show="loader" class="loader"></div>
         <div v-show="!loader">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <button class="btn btn-info btn-sm">
+                <button @click="download" class="btn btn-info btn-sm">
                     <i class="fa fa-download"></i> Download
                 </button>
                 <a :href="'/file/upload/'+container.get_dir_id" class="btn btn-warning btn-sm">
@@ -12,14 +12,11 @@
                 <button class="btn btn-danger btn-sm">
                     <i class="fa fa-trash-o"></i> Delete
                 </button>
-                <button @click="showMoveModal" class="btn btn-primary btn-sm">
+                <button @click="showMoveModal('move')" class="btn btn-primary btn-sm">
                     <i class="fa fa-arrows-alt"></i> Move
                 </button>
-                <button class="btn btn-success btn-sm">
+                <button @click="showMoveModal('copy')" class="btn btn-success btn-sm">
                     <i class="fa fa-copy"></i> Copy
-                </button>
-                <button class="btn btn-success btn-sm">
-                    <i class="fa fa-copy"></i> Rename
                 </button>
                 <button class="btn btn-warning btn-sm">
                     <i class="fa fa-refresh"></i> Refresh
@@ -78,7 +75,8 @@
                                         <td>555kb</td>
                                         <td>{{ file.created_at }}</td>
                                         <td>
-                                            <button class="bt btn-info btn-xs"><i class="fa fa-edit"></i></button>
+                                            <button @click="showEditModal(file.id,file.file_name)" class="bt btn-info btn-xs"><i class="fa fa-edit"></i></button>
+                                            <button @click="downloadSingleFile(file.id)" class="bt btn-info btn-xs"><i class="fa fa-download"></i></button>
                                             <button class="bt btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>
                                         </td>
                                     </tr>
@@ -100,12 +98,17 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" @click="closeMoveModal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">Move Folder</h4>
+                            <h4 v-if="move_files.mode==='move'" class="modal-title">Move Folder</h4>
+                            <h4 v-else class="modal-title">Copy Folder</h4>
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div v-if="move_files.mode==='move'" class="col-md-12 col-sm-12 col-xs-12">
                                     <label class="alert alert-danger">Move To > {{ move_files.dir }}</label>
+                                    <label class="alert alert-info">Path > {{ move_files.dir_path }}</label>
+                                </div>
+                                <div v-else class="col-md-12 col-sm-12 col-xs-12">
+                                    <label class="alert alert-danger">Copy To > {{ move_files.dir }}</label>
                                     <label class="alert alert-info">Path > {{ move_files.dir_path }}</label>
                                 </div>
                             </div>
@@ -158,12 +161,36 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" @click="closeMoveModal">Close</button>
-                            <button type="button" class="btn btn-primary" @click="moveFiles">Save</button>
+                            <button type="button" class="btn btn-primary" @click="handleFiles">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- End Modal -->
+            <!-- Edit File Modal Box -->
+            <div :class="'modal fade'+modal.editModalIn" id="add_folder" tabindex="-1" role="dialog" :style="modal.editModalStyle">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" @click="closeEditModal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">Rename File Name</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>File Name</label>
+                                <div class="form-line">
+                                    <input v-model="files.file_name" type="text" name="file_name" class="form-control" placeholder="Rename File Name..">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" @click="closeEditModal">Close</button>
+                            <button type="button" class="btn btn-primary" @click="renameFiles" >Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Edit File Modal -->
         </div>
     </div>
 </template>
@@ -178,17 +205,24 @@
                 modal:{
                     moveModalStyle:"display: none;",
                     moveModalIn:"",
+                    editModalStyle:"display:none",
+                    editModalIn:""
                 },
                 response_error:'null',
                 small_loader:true,
                 move_files:{
+                    mode:"",
                     dir_id:0,
                     dir:'',
                     dir_path:'',
                     selected_files:[]
                 },
                 root_dir_list:{},
-                sub_dir_list:{}
+                sub_dir_list:{},
+                files:{
+                    file_id:0,
+                    file_name:''
+                }
             }
         },
         props:[
@@ -263,13 +297,16 @@
                         console.log(error)
                     );
             },
-            moveFiles(){
+            handleFiles(){
                 let data = {
                     move_dir_id:this.move_files.dir_id,
-                    selected_files:this.move_files.selected_files
+                    selected_files:this.move_files.selected_files,
+                    mode:this.move_files.mode
                 };
                 if (this.move_files.selected_files.length>0){
-                    axios.post('/move/files',data)
+                    let url = '';
+                    this.move_files.mode==='move'?url='/move/files':url='/copy/files';
+                    axios.post(url,data)
                         .then((response) => {
                             console.log(response.data)
                         })
@@ -280,7 +317,47 @@
                     alert('No Dir Selected To Move');
                 }
             },
-            showMoveModal(){
+            renameFiles(){
+                let data = {
+                    file_id:this.files.file_id,
+                    file_name:this.files.file_name
+                };
+                if (this.files.file_name!==''){
+                    axios.post('/rename/files',data)
+                        .then((response) => {
+                           console.log(response.data)
+                        }).catch((error)=>{
+                            console.log(error)
+                        });
+                }
+            },
+            download(){
+                let data = {
+                    selected_files:this.move_files.selected_files,
+                };
+                if (this.move_files.selected_files.length>0){
+                    axios.post('/download/as/zip',data)
+                        .then((response) => {
+                            console.log(response.data)
+                        })
+                        .catch((error) =>
+                            console.log(error)
+                        );
+                }else{
+                    alert('No File Selected');
+                }
+            },
+            downloadSingleFile(id){
+               axios.get('/download/'+id)
+                   .then((response)=>{
+                       console.log(response.data)
+                   })
+                   .catch((error)=>{
+                       console.log(error)
+                   });
+            },
+            showMoveModal(val){
+                this.move_files.mode = val;
                 this.modal.moveModalIn="in";
                 this.modal.moveModalStyle="display: block;"
             },
@@ -288,8 +365,21 @@
                 this.sub_dir_list={};
                 this.small_loader=true;
                 this.move_files.dir_id = 0;
+                this.move_files.mode = "";
                 this.modal.moveModalIn="";
                 this.modal.moveModalStyle="display: none;"
+            },
+            showEditModal(id,name){
+                this.files.file_id = id;
+                this.files.file_name = name;
+                this.modal.editModalIn="in";
+                this.modal.editModalStyle="display: block;"
+            },
+            closeEditModal(){
+                this.files.file_id = 0;
+                this.files.file_name = '';
+                this.modal.editModalIn="";
+                this.modal.editModalStyle="display: none;"
             }
         },
         watch:{

@@ -198,4 +198,60 @@ class FileViewerEloquent implements FileViewerInterface
             ]);
         }
     }
+
+    public function copyFiles(Request $request)
+    {
+        $files = $request->selected_files;
+        foreach ($files as $id){
+            $new_file_path="";
+            $old_file_path="";
+            $directory = $this->directoryModel->find($request->move_dir_id);
+            $oldFile = $this->fileModel->find($id);
+            $old_file_path = $oldFile->file_path;
+            $new_file_path = $directory->dir_path."/".$oldFile->file_name;
+
+            $file = $oldFile->replicate();
+            $file->dir_id = $request->move_dir_id;
+            $file->file_path = $new_file_path;
+            $file->file_type = $directory->file_types->file_type;
+            $file->save();
+            // here move the directory from storage by storage class
+            Storage::copy(self::$STORE.$old_file_path,self::$STORE.$new_file_path);
+        }
+        return response()->json('success',201);
+    }
+
+    public function renameFiles(Request $request)
+    {
+        $new_file_path="";
+        $old_file_path="";
+        $file = $this->fileModel->find($request->file_id);
+        $old_file_path = $file->file_path;
+        $renamed_file = time()."_".$request->file_name;
+        $new_file_path = $file->directory->dir_path."/".$renamed_file;
+        $file->file_path = $new_file_path;
+        $file->file_name = $renamed_file;
+        $file->save();
+        // here move the directory from storage by storage class
+        Storage::move(self::$STORE.$old_file_path,self::$STORE.$new_file_path);
+
+        return response()->json('success',201);
+    }
+
+    public function downloadAsZip(Request $request)
+    {
+        $files=[];
+        $selected_files = $request->selected_files;
+        foreach ($selected_files as $id){
+            $file =  $this->fileModel->find($id);
+            $files[] = $file->file_path;
+        }
+        return response()->json($files,201);
+    }
+
+    public function downloadSingleFile($id)
+    {
+        $file = $this->fileModel->find($id);
+        return Storage::download(self::$STORE.$file->file_path);
+    }
 }

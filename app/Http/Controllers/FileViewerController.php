@@ -147,4 +147,45 @@ class FileViewerController extends Controller
         }
         return $this->fileViewer->moveFiles($request);
     }
+
+
+    /**
+     * Copy Files To Another Directory
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function copyFiles(Request $request){
+        $validation = Validator::make($request->all(),[
+            'move_dir_id'=>'required',
+            'selected_files'=>'required|array|min:1'
+        ]);
+        if ($validation->fails()){
+            return response()->json(ValidationErrors::getErrors($validation),201);
+        }
+        return $this->fileViewer->copyFiles($request);
+    }
+
+    /**
+     * Rename Files
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function renameFiles(Request $request){
+        $validation = Validator::make($request->all(),[
+            'file_id'=>'required',
+            'file_name'=>'required'
+        ]);
+        if ($validation->fails()){
+            return response()->json(ValidationErrors::getErrors($validation),201);
+        }
+        return $this->fileViewer->renameFiles($request);
+    }
+
+    public function downloadAsZip(Request $request){
+       return $this->fileViewer->downloadAsZip($request);
+    }
+
+    public function singleDownload($id){
+       return $this->fileViewer->downloadSingleFile($id);
+    }
 }

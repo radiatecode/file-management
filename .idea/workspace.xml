@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5d03d387-e89c-48b3-bdec-adf016dafc4d" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/file management.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/file management.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FileViewerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FileViewerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/FileViewer/FileViewerEloquent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/FileViewer/FileViewerEloquent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/FileViewer/FileViewerInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/FileViewer/FileViewerInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/file_viewer/Directories.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/file_viewer/Directories.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -21,7 +25,62 @@
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450" />
+    <leaf>
+      <file leaf-file-name="web.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/routes/web.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="326">
+              <caret line="33" column="21" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileViewerController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FileViewerController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="477">
+              <caret line="188" column="57" selection-start-line="188" selection-start-column="57" selection-end-line="188" selection-end-column="57" />
+              <folding>
+                <element signature="e#39#57#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileViewerEloquent.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Repository/FileViewer/FileViewerEloquent.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="253" column="44" selection-start-line="253" selection-start-column="44" selection-end-line="253" selection-end-column="44" />
+              <folding>
+                <element signature="e#130#148#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileViewer.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="191">
+              <caret line="78" column="78" selection-start-line="78" selection-start-column="60" selection-end-line="78" selection-end-column="78" />
+              <folding>
+                <element signature="n#div#2;n#div#1;n#div#0;n#template#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileViewerInterface.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Repository/FileViewer/FileViewerInterface.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="452">
+              <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -32,8 +91,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>dir_path</find>
-      <find>getFiles</find>
       <find>file-upload</find>
       <find>url</find>
       <find>local-file-viewer</find>
@@ -62,9 +119,12 @@
       <find>getSubDir</find>
       <find>fileUpload</find>
       <find>moveFiles</find>
+      <find>handleFiles</find>
+      <find>downloadSingleFile</find>
     </findStrings>
     <replaceStrings>
       <replace>container</replace>
+      <replace>handleFiles</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -103,12 +163,12 @@
         <option value="$PROJECT_DIR$/resources/js/components/file_viewer/Directories.vue" />
         <option value="$PROJECT_DIR$/app/Repository/FileViewer/FileViewer.php" />
         <option value="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" />
+        <option value="$PROJECT_DIR$/app/HelperClass/ValidationErrors.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Repository/FileViewer/FileViewerInterface.php" />
-        <option value="$PROJECT_DIR$/app/HelperClass/ValidationErrors.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue" />
         <option value="$PROJECT_DIR$/app/Repository/FileViewer/FileViewerEloquent.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FileViewerController.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue" />
       </list>
     </option>
   </component>
@@ -231,9 +291,10 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-util" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-iconv" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/chumper/zipper" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1385" />
@@ -244,6 +305,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -254,120 +316,43 @@
             <path>
               <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
               <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
               <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="HelperClass" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
-              <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
-              <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="js" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
               <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="js" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="dm-uploader" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="components" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
               <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="js" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="pages-js" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="components" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="file_viewer" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
               <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="js" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="pages-js" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="uploader" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
-              <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="storage" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="routes" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
               <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="storage" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
-              <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="storage" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
-              <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="storage" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Radiate" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
-              <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="storage" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Radiate" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Images" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
-              <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="storage" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Radiate" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Images" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Nur" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
-              <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="storage" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Radiate" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Images" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Nur" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="2019" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
-              <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="storage" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Radiate" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Images" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Nur" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="2019" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="january" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -433,15 +418,16 @@
       <workItem from="1554396533423" duration="3782000" />
       <workItem from="1554715927385" duration="10757000" />
       <workItem from="1554782767835" duration="16895000" />
-      <workItem from="1554869168978" duration="19246000" />
+      <workItem from="1554869168978" duration="19382000" />
+      <workItem from="1554955274025" duration="16884000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="159178000" />
+    <option name="totallyTimeSpent" value="176198000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.32972974" />
@@ -450,10 +436,9 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.51835537" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21216217" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20337838" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32886904" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
@@ -463,6 +448,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32886904" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -477,16 +463,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FileViewerController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2430">
-          <caret line="97" column="40" selection-start-line="97" selection-start-column="40" selection-end-line="97" selection-end-column="40" />
-          <folding>
-            <element signature="e#39#57#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/partials/_head.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -638,13 +614,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="13" column="12" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SetupController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
@@ -656,13 +625,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="20" column="37" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/File.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="8" column="29" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -727,13 +689,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/file_viewer/Directories.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1001">
-          <caret line="67" column="33" selection-start-line="64" selection-start-column="28" selection-end-line="67" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Directory.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
@@ -751,34 +706,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/HelperClass/ValidationErrors.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="17" column="27" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Repository/FileViewer/FileViewerInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/app/public/Radiate/Images/Nur/2019/january/1554890909_wp1822478.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/pages-js/uploader/config.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1083">
           <caret line="10" column="14" lean-forward="true" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="32" column="44" lean-forward="true" selection-start-line="32" selection-start-column="44" selection-end-line="32" selection-end-column="44" />
         </state>
       </provider>
     </entry>
@@ -789,10 +720,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/HelperClass/ValidationErrors.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="31" lean-forward="true" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/file_viewer/Directories.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="97" column="26" selection-start-line="74" selection-start-column="8" selection-end-line="97" selection-end-column="26" />
+          <folding>
+            <element signature="n#div#2;n#div#0;n#template#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/File.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/app/public/Radiate/Images/Pritee/1554891250_reverse.jpg.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="13" column="12" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1206" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Repository/FileViewer/FileViewerInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="78" column="78" selection-start-line="78" selection-start-column="60" selection-end-line="78" selection-end-column="78" />
+          <folding>
+            <element signature="n#div#2;n#div#1;n#div#0;n#template#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Repository/FileViewer/FileViewerEloquent.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4">
-          <caret line="176" column="39" lean-forward="true" selection-start-line="176" selection-start-column="39" selection-end-line="176" selection-end-column="39" />
+        <state relative-caret-position="396">
+          <caret line="253" column="44" selection-start-line="253" selection-start-column="44" selection-end-line="253" selection-end-column="44" />
           <folding>
             <element signature="e#130#148#0#PHP" expanded="true" />
           </folding>
@@ -801,8 +788,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FileViewerController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-837">
-          <caret line="103" lean-forward="true" selection-start-line="103" selection-end-line="103" />
+        <state relative-caret-position="477">
+          <caret line="188" column="57" selection-start-line="188" selection-start-column="57" selection-end-line="188" selection-end-column="57" />
           <folding>
             <element signature="e#39#57#0#PHP" expanded="true" />
           </folding>
@@ -811,8 +798,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="37" column="59" selection-start-line="37" selection-start-column="49" selection-end-line="37" selection-end-column="59" />
+        <state relative-caret-position="326">
+          <caret line="33" column="21" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="21" />
         </state>
       </provider>
     </entry>

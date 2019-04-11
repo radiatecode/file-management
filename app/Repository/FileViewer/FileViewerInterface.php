@@ -25,6 +25,10 @@ interface FileViewerInterface
     public function fileUpload(Request $request);
     public function moveDirs(Request $request);
     public function moveFiles(Request $request);
+    public function copyFiles(Request $request);
+    public function renameFiles(Request $request);
+    public function downloadAsZip(Request $request);
+    public function downloadSingleFile($id);
 
 
 }

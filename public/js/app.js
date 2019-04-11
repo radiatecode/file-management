@@ -2149,6 +2149,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "FileViewerInterface",
   data: function data() {
@@ -2157,18 +2184,25 @@ __webpack_require__.r(__webpack_exports__);
       file_list: {},
       modal: {
         moveModalStyle: "display: none;",
-        moveModalIn: ""
+        moveModalIn: "",
+        editModalStyle: "display:none",
+        editModalIn: ""
       },
       response_error: 'null',
       small_loader: true,
       move_files: {
+        mode: "",
         dir_id: 0,
         dir: '',
         dir_path: '',
         selected_files: []
       },
       root_dir_list: {},
-      sub_dir_list: {}
+      sub_dir_list: {},
+      files: {
+        file_id: 0,
+        file_name: ''
+      }
     };
   },
   props: ['container', 'change_dir'],
@@ -2238,14 +2272,17 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(error);
       });
     },
-    moveFiles: function moveFiles() {
+    handleFiles: function handleFiles() {
       var data = {
         move_dir_id: this.move_files.dir_id,
-        selected_files: this.move_files.selected_files
+        selected_files: this.move_files.selected_files,
+        mode: this.move_files.mode
       };
 
       if (this.move_files.selected_files.length > 0) {
-        axios.post('/move/files', data).then(function (response) {
+        var url = '';
+        this.move_files.mode === 'move' ? url = '/move/files' : url = '/copy/files';
+        axios.post(url, data).then(function (response) {
           console.log(response.data);
         }).catch(function (error) {
           return console.log(error);
@@ -2254,7 +2291,44 @@ __webpack_require__.r(__webpack_exports__);
         alert('No Dir Selected To Move');
       }
     },
-    showMoveModal: function showMoveModal() {
+    renameFiles: function renameFiles() {
+      var data = {
+        file_id: this.files.file_id,
+        file_name: this.files.file_name
+      };
+
+      if (this.files.file_name !== '') {
+        axios.post('/rename/files', data).then(function (response) {
+          console.log(response.data);
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
+    },
+    download: function download() {
+      var data = {
+        selected_files: this.move_files.selected_files
+      };
+
+      if (this.move_files.selected_files.length > 0) {
+        axios.post('/download/as/zip', data).then(function (response) {
+          console.log(response.data);
+        }).catch(function (error) {
+          return console.log(error);
+        });
+      } else {
+        alert('No File Selected');
+      }
+    },
+    downloadSingleFile: function downloadSingleFile(id) {
+      axios.get('/download/' + id).then(function (response) {
+        console.log(response.data);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    showMoveModal: function showMoveModal(val) {
+      this.move_files.mode = val;
       this.modal.moveModalIn = "in";
       this.modal.moveModalStyle = "display: block;";
     },
@@ -2262,8 +2336,21 @@ __webpack_require__.r(__webpack_exports__);
       this.sub_dir_list = {};
       this.small_loader = true;
       this.move_files.dir_id = 0;
+      this.move_files.mode = "";
       this.modal.moveModalIn = "";
       this.modal.moveModalStyle = "display: none;";
+    },
+    showEditModal: function showEditModal(id, name) {
+      this.files.file_id = id;
+      this.files.file_name = name;
+      this.modal.editModalIn = "in";
+      this.modal.editModalStyle = "display: block;";
+    },
+    closeEditModal: function closeEditModal() {
+      this.files.file_id = 0;
+      this.files.file_name = '';
+      this.modal.editModalIn = "";
+      this.modal.editModalStyle = "display: none;";
     }
   },
   watch: {
@@ -23533,7 +23620,14 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "col-md-12 col-sm-12 col-xs-12" }, [
-          _vm._m(0),
+          _c(
+            "button",
+            { staticClass: "btn btn-info btn-sm", on: { click: _vm.download } },
+            [
+              _c("i", { staticClass: "fa fa-download" }),
+              _vm._v(" Download\n            ")
+            ]
+          ),
           _vm._v(" "),
           _c(
             "a",
@@ -23547,13 +23641,17 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "button",
             {
               staticClass: "btn btn-primary btn-sm",
-              on: { click: _vm.showMoveModal }
+              on: {
+                click: function($event) {
+                  return _vm.showMoveModal("move")
+                }
+              }
             },
             [
               _c("i", { staticClass: "fa fa-arrows-alt" }),
@@ -23561,11 +23659,23 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(2),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-success btn-sm",
+              on: {
+                click: function($event) {
+                  return _vm.showMoveModal("copy")
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "fa fa-copy" }),
+              _vm._v(" Copy\n            ")
+            ]
+          ),
           _vm._v(" "),
-          _vm._m(3),
-          _vm._v(" "),
-          _vm._m(4)
+          _vm._m(1)
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-12 col-sm-12 col-xs-12" }, [
@@ -23591,7 +23701,7 @@ var render = function() {
                     }
                   },
                   [
-                    _vm._m(5),
+                    _vm._m(2),
                     _vm._v(" "),
                     _vm.response_error === "null"
                       ? _c(
@@ -23696,7 +23806,7 @@ var render = function() {
                                 : _vm._e(),
                               _vm._v(" "),
                               file.file_type === "Documents"
-                                ? _c("td", [_vm._m(6, true)])
+                                ? _c("td", [_vm._m(3, true)])
                                 : _vm._e(),
                               _vm._v(" "),
                               _c("td", [
@@ -23713,7 +23823,38 @@ var render = function() {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(file.created_at))]),
                               _vm._v(" "),
-                              _vm._m(7, true)
+                              _c("td", [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "bt btn-info btn-xs",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.showEditModal(
+                                          file.id,
+                                          file.file_name
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "fa fa-edit" })]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "bt btn-info btn-xs",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.downloadSingleFile(file.id)
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "fa fa-download" })]
+                                ),
+                                _vm._v(" "),
+                                _vm._m(4, true)
+                              ])
                             ])
                           }),
                           0
@@ -23753,26 +23894,48 @@ var render = function() {
                     [_vm._v("×")]
                   ),
                   _vm._v(" "),
-                  _c("h4", { staticClass: "modal-title" }, [
-                    _vm._v("Move Folder")
-                  ])
+                  _vm.move_files.mode === "move"
+                    ? _c("h4", { staticClass: "modal-title" }, [
+                        _vm._v("Move Folder")
+                      ])
+                    : _c("h4", { staticClass: "modal-title" }, [
+                        _vm._v("Copy Folder")
+                      ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c("div", { staticClass: "row" }, [
-                    _c(
-                      "div",
-                      { staticClass: "col-md-12 col-sm-12 col-xs-12" },
-                      [
-                        _c("label", { staticClass: "alert alert-danger" }, [
-                          _vm._v("Move To > " + _vm._s(_vm.move_files.dir))
-                        ]),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "alert alert-info" }, [
-                          _vm._v("Path > " + _vm._s(_vm.move_files.dir_path))
-                        ])
-                      ]
-                    )
+                    _vm.move_files.mode === "move"
+                      ? _c(
+                          "div",
+                          { staticClass: "col-md-12 col-sm-12 col-xs-12" },
+                          [
+                            _c("label", { staticClass: "alert alert-danger" }, [
+                              _vm._v("Move To > " + _vm._s(_vm.move_files.dir))
+                            ]),
+                            _vm._v(" "),
+                            _c("label", { staticClass: "alert alert-info" }, [
+                              _vm._v(
+                                "Path > " + _vm._s(_vm.move_files.dir_path)
+                              )
+                            ])
+                          ]
+                        )
+                      : _c(
+                          "div",
+                          { staticClass: "col-md-12 col-sm-12 col-xs-12" },
+                          [
+                            _c("label", { staticClass: "alert alert-danger" }, [
+                              _vm._v("Copy To > " + _vm._s(_vm.move_files.dir))
+                            ]),
+                            _vm._v(" "),
+                            _c("label", { staticClass: "alert alert-info" }, [
+                              _vm._v(
+                                "Path > " + _vm._s(_vm.move_files.dir_path)
+                              )
+                            ])
+                          ]
+                        )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
@@ -23858,7 +24021,7 @@ var render = function() {
                                 "table table-striped table-bordered table-hover"
                             },
                             [
-                              _vm._m(8),
+                              _vm._m(5),
                               _vm._v(" "),
                               _c(
                                 "tbody",
@@ -23926,7 +24089,102 @@ var render = function() {
                     {
                       staticClass: "btn btn-primary",
                       attrs: { type: "button" },
-                      on: { click: _vm.moveFiles }
+                      on: { click: _vm.handleFiles }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            class: "modal fade" + _vm.modal.editModalIn,
+            style: _vm.modal.editModalStyle,
+            attrs: { id: "add_folder", tabindex: "-1", role: "dialog" }
+          },
+          [
+            _c("div", { staticClass: "modal-dialog" }, [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: { type: "button", "aria-hidden": "true" },
+                      on: { click: _vm.closeEditModal }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "h4",
+                    {
+                      staticClass: "modal-title",
+                      attrs: { id: "myModalLabel" }
+                    },
+                    [_vm._v("Rename File Name")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("File Name")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-line" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.files.file_name,
+                            expression: "files.file_name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "file_name",
+                          placeholder: "Rename File Name.."
+                        },
+                        domProps: { value: _vm.files.file_name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.files,
+                              "file_name",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default",
+                      attrs: { type: "button" },
+                      on: { click: _vm.closeEditModal }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: { click: _vm.renameFiles }
                     },
                     [_vm._v("Save")]
                   )
@@ -23944,36 +24202,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-info btn-sm" }, [
-      _c("i", { staticClass: "fa fa-download" }),
-      _vm._v(" Download\n            ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("button", { staticClass: "btn btn-danger btn-sm" }, [
       _c("i", { staticClass: "fa fa-trash-o" }),
       _vm._v(" Delete\n            ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-success btn-sm" }, [
-      _c("i", { staticClass: "fa fa-copy" }),
-      _vm._v(" Copy\n            ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-success btn-sm" }, [
-      _c("i", { staticClass: "fa fa-copy" }),
-      _vm._v(" Rename\n            ")
     ])
   },
   function() {
@@ -24038,14 +24269,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("button", { staticClass: "bt btn-info btn-xs" }, [
-        _c("i", { staticClass: "fa fa-edit" })
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "bt btn-danger btn-xs" }, [
-        _c("i", { staticClass: "fa fa-trash-o" })
-      ])
+    return _c("button", { staticClass: "bt btn-danger btn-xs" }, [
+      _c("i", { staticClass: "fa fa-trash-o" })
     ])
   },
   function() {

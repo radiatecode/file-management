@@ -27,7 +27,11 @@ Route::get("/get/dir/{root_id}","FileViewerController@getRootContainDirs");
 Route::get("/get/sub/dir/{sub_dir_id}","FileViewerController@getSubDir");
 Route::post("/move/dir","FileViewerController@moveDir")->name('move.dir');
 Route::post("/move/files","FileViewerController@moveFiles")->name('move.files');
+Route::post("/copy/files","FileViewerController@copyFiles")->name('copy.files');
+Route::post("/rename/files","FileViewerController@renameFiles")->name('copy.files');
+Route::post("/download/as/zip","FileViewerController@downloadAsZip")->name('download.zip');
 Route::get("/moved","FileViewerController@moved");
+Route::get("/download/{id}","FileViewerController@singleDownload");
 //Route::get("/get/directory/files","FileViewerController@getFiles");
 
 Route::get('/file/types','SetupController@fileTypeList');
