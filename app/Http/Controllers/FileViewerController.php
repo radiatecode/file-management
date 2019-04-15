@@ -181,6 +181,30 @@ class FileViewerController extends Controller
         return $this->fileViewer->renameFiles($request);
     }
 
+    /**
+     * Delete Multiple Files
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteFiles(Request $request){
+        $validation = Validator::make($request->all(),[
+            'selected_files'=>'required|array|min:1'
+        ]);
+        if ($validation->fails()){
+            return response()->json(ValidationErrors::getErrors($validation),201);
+        }
+        return $this->fileViewer->deleteFiles($request);
+    }
+
+    /**
+     * Delete Single File
+     * @param $id
+     * @return mixed
+     */
+    public function deleteFile($id){
+        return $this->fileViewer->deleteFile($id);
+    }
+
     public function downloadAsZip(Request $request){
        return $this->fileViewer->downloadAsZip($request);
     }

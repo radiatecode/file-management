@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div v-show="loader" class="loader"></div>
-        <div v-show="!loader">
+        <div v-show="file_loader" class="loader"></div>
+        <div v-show="!file_loader">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <button @click="download" class="btn btn-info btn-sm">
                     <i class="fa fa-download"></i> Download
@@ -9,7 +9,7 @@
                 <a :href="'/file/upload/'+container.get_dir_id" class="btn btn-warning btn-sm">
                     <i class="fa fa-upload"></i> Upload
                 </a>
-                <button class="btn btn-danger btn-sm">
+                <button @click="deleteFiles" class="btn btn-danger btn-sm">
                     <i class="fa fa-trash-o"></i> Delete
                 </button>
                 <button @click="showMoveModal('move')" class="btn btn-primary btn-sm">
@@ -18,7 +18,7 @@
                 <button @click="showMoveModal('copy')" class="btn btn-success btn-sm">
                     <i class="fa fa-copy"></i> Copy
                 </button>
-                <button class="btn btn-warning btn-sm">
+                <button @click="getFiles" class="btn btn-warning btn-sm">
                     <i class="fa fa-refresh"></i> Refresh
                 </button>
             </div>
@@ -76,8 +76,8 @@
                                         <td>{{ file.created_at }}</td>
                                         <td>
                                             <button @click="showEditModal(file.id,file.file_name)" class="bt btn-info btn-xs"><i class="fa fa-edit"></i></button>
-                                            <button @click="downloadSingleFile(file.id)" class="bt btn-info btn-xs"><i class="fa fa-download"></i></button>
-                                            <button class="bt btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>
+                                            <button @click="downloadSingleFile(file.id,file.file_name)" class="bt btn-info btn-xs"><i class="fa fa-download"></i></button>
+                                            <button @click="deleteSingleFile(file.id)" class="bt btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -90,7 +90,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <!-- Move Modal Box -->
             <div :class="'modal fade'+modal.moveModalIn" id="move_folder" tabindex="-1" role="dialog" :style="modal.moveModalStyle">
@@ -135,7 +134,7 @@
                                             Sub Folders
                                         </div>
                                         <div class="panel-body">
-                                            <div v-show="small_loader" class="small_loader"></div>
+                                            <div v-show="small_loader" class="small_file_loader"></div>
                                             <table v-show="!small_loader" class="table table-striped table-bordered table-hover">
                                                 <thead>
                                                 <tr>
@@ -196,11 +195,13 @@
 </template>
 
 <script>
+    import FileDownload from 'js-file-download'
+    import Request from '../../module';
     export default {
         name: "FileViewerInterface",
         data(){
             return{
-                loader:true,
+                file_loader:true,
                 file_list:{},
                 modal:{
                     moveModalStyle:"display: none;",
@@ -236,7 +237,7 @@
         },
         methods:{
             getFiles(){
-                this.loader = false;
+                this.file_loader = true;
                 axios.get('/get/dir/files/'+this.container.get_dir_id)
                     .then((response) =>
                         {
@@ -246,13 +247,14 @@
                             } else{
                                 this.response_error = response.data.data
                             }
-                            this.loader = false;
+                            this.file_loader = false;
                             console.log(response.data.data)
                         }
                     ).catch((error) =>
                         console.log(error)
                     );
                 //console.log("hello "+this.container.get_dir_id);
+                return true;
             },
             getRootDir(){
                 axios.get('/get/root/dir/')
@@ -287,7 +289,7 @@
                     .then((response) => {
                         this.small_loader = false;
                         if (response.data.length===0){
-                            alert('no dir')
+                            this.sub_dir_list = response.data;
                         } else{
                             this.sub_dir_list = response.data;
                         }
@@ -304,17 +306,29 @@
                     mode:this.move_files.mode
                 };
                 if (this.move_files.selected_files.length>0){
-                    let url = '';
-                    this.move_files.mode==='move'?url='/move/files':url='/copy/files';
-                    axios.post(url,data)
-                        .then((response) => {
-                            console.log(response.data)
-                        })
-                        .catch((error) =>
-                            console.log(error)
-                        );
+                    let request = {
+                        text:"You want to move the files?",
+                        confirmText:"Yes, Move It",
+                        url:this.move_files.mode==='move'?'/move/files':'/copy/files',
+                        data:data,
+                        log:true,
+                        errorAlert:true,
+                        successAlert:{
+                            alert:true,
+                            title:'Moved!',
+                            message:'You have Successfully Move the files'
+                        },
+                        successAction:function (response) {
+                            return 'Hello';
+                        }
+                    };
+                    Request.postConfirmRoute(request);
                 }else{
-                    alert('No Dir Selected To Move');
+                    this.$swal(
+                        'Error!',
+                        'No Directory Selected!',
+                        'error'
+                    );
                 }
             },
             renameFiles(){
@@ -323,12 +337,25 @@
                     file_name:this.files.file_name
                 };
                 if (this.files.file_name!==''){
-                    axios.post('/rename/files',data)
-                        .then((response) => {
-                           console.log(response.data)
-                        }).catch((error)=>{
-                            console.log(error)
-                        });
+                    let request = {
+                        text:"You want to change the file name?",
+                        confirmText:"Yes, Rename It",
+                        url:'/rename/files',
+                        data:data,
+                        log:false,
+                        errorAlert:true,
+                        successAlert:{
+                            alert:true,
+                            title:'Renamed!',
+                            message:'You have Successfully Rename the file'
+                        },
+                        successAction:function (response) {
+                            
+                        }
+
+                    };
+
+                    Request.postConfirmRoute(request);
                 }
             },
             download(){
@@ -347,14 +374,65 @@
                     alert('No File Selected');
                 }
             },
-            downloadSingleFile(id){
-               axios.get('/download/'+id)
-                   .then((response)=>{
-                       console.log(response.data)
-                   })
-                   .catch((error)=>{
-                       console.log(error)
-                   });
+            downloadSingleFile(id,file_name){
+               axios.get('/download/'+id,{
+                   responseType: 'arraybuffer',
+                   headers: {
+                       'Accept': 'application/octet-stream'
+                   }
+               }).then((response)=>{
+                   /*
+                   * this raw code
+                   const url = window.URL.createObjectURL(new Blob([response.data], {type: 'application/octet-stream'}));
+                   const link = document.createElement('a');
+                   link.href = url;
+                   link.setAttribute('download', file_name);
+                   document.body.appendChild(link);
+                   link.click(); */
+                   FileDownload(response.data,file_name); /* this by library */
+                   //console.log(response.data)
+               })
+               .catch((error)=>{
+                   //console.log(error)
+               });
+            },
+            deleteFiles(){
+                let data = {
+                    selected_files:this.move_files.selected_files
+                };
+                if (this.move_files.selected_files.length>0) {
+                    let request = {
+                        text:"You won't revert it",
+                        confirmText:"Yes, Delete It",
+                        url:"/delete/files",
+                        data:data,
+                        log:true,
+                        errorAlert:true,
+                        successAlert:{
+                            alert:true,
+                            title:'Deleted!',
+                            message:'You have Successfully Data deleted.'
+                        },
+                        successAction:function (response) {}
+                    };
+                    Request.postConfirmRoute(request);
+                }
+            },
+            deleteSingleFile(id){
+                let request = {
+                    text:"You won't revert it",
+                    confirmText:"Yes, Delete It",
+                    url:'/delete/file/'+id,
+                    log:true,
+                    errorAlert:true,
+                    successAlert:{
+                        alert:true,
+                        title:'Deleted!',
+                        message:'You have Successfully Deleted Data.'
+                    },
+                    successAction:function (response) {}
+                };
+                Request.getConfirmRoute(request);
             },
             showMoveModal(val){
                 this.move_files.mode = val;

@@ -2,15 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5d03d387-e89c-48b3-bdec-adf016dafc4d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/file management.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/file management.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FileViewerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FileViewerController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repository/FileViewer/FileViewerEloquent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/FileViewer/FileViewerEloquent.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repository/FileViewer/FileViewerInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/FileViewer/FileViewerInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/file_viewer/Directories.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/file_viewer/Directories.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -25,12 +25,12 @@
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="web.php" pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="web.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
-              <caret line="33" column="21" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="21" />
+            <state relative-caret-position="288">
+              <caret line="31" column="26" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -38,8 +38,8 @@
       <file leaf-file-name="FileViewerController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FileViewerController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="477">
-              <caret line="188" column="57" selection-start-line="188" selection-start-column="57" selection-end-line="188" selection-end-column="57" />
+            <state relative-caret-position="340">
+              <caret line="202" column="7" selection-start-line="202" selection-start-column="7" selection-end-line="202" selection-end-column="7" />
               <folding>
                 <element signature="e#39#57#0#PHP" expanded="true" />
               </folding>
@@ -50,8 +50,8 @@
       <file leaf-file-name="FileViewerEloquent.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Repository/FileViewer/FileViewerEloquent.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="253" column="44" selection-start-line="253" selection-start-column="44" selection-end-line="253" selection-end-column="44" />
+            <state relative-caret-position="531">
+              <caret line="280" column="9" selection-start-line="280" selection-start-column="9" selection-end-line="280" selection-end-column="9" />
               <folding>
                 <element signature="e#130#148#0#PHP" expanded="true" />
               </folding>
@@ -59,23 +59,36 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileViewer.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FileViewer.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="78" column="78" selection-start-line="78" selection-start-column="60" selection-end-line="78" selection-end-column="78" />
+            <state relative-caret-position="332">
+              <caret line="353" column="25" lean-forward="true" selection-start-line="353" selection-start-column="25" selection-end-line="353" selection-end-column="25" />
               <folding>
                 <element signature="n#div#2;n#div#1;n#div#0;n#template#0;n#!!top" />
+                <element signature="e#12113#12156#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileViewerInterface.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Repository/FileViewer/FileViewerInterface.php">
+      <file leaf-file-name="module.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/js/module.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
+            <state relative-caret-position="134">
+              <caret line="14" column="38" lean-forward="true" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Directories.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/js/components/file_viewer/Directories.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="316">
+              <caret line="150" selection-start-line="150" selection-end-line="150" />
+              <folding>
+                <element signature="n#div#2;n#div#0;n#template#0;n#!!top" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -86,14 +99,12 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Vue Single File Component" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>file-upload</find>
-      <find>url</find>
-      <find>local-file-viewer</find>
       <find>getDir</find>
       <find>pay</find>
       <find>Pay</find>
@@ -106,7 +117,6 @@
       <find>myModalLabel</find>
       <find>root_dir</find>
       <find>root_dir_id</find>
-      <find>loader</find>
       <find>selected_dir</find>
       <find>root_dir_list</find>
       <find>sub_dir_list</find>
@@ -121,10 +131,15 @@
       <find>moveFiles</find>
       <find>handleFiles</find>
       <find>downloadSingleFile</find>
+      <find>file_list</find>
+      <find>loader</find>
+      <find>file_loader</find>
+      <find>deleteSingleFile</find>
     </findStrings>
     <replaceStrings>
       <replace>container</replace>
       <replace>handleFiles</replace>
+      <replace>file_loader</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -150,7 +165,6 @@
         <option value="$PROJECT_DIR$/database/migrations/2019_03_15_155423_create_file_types_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_03_15_185006_create_directories_table.php" />
         <option value="$PROJECT_DIR$/resources/views/partials/_head.blade.php" />
-        <option value="$PROJECT_DIR$/resources/js/app.js" />
         <option value="$PROJECT_DIR$/resources/views/local-file-viewer/local-file-viewer.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/SetupController.php" />
         <option value="$PROJECT_DIR$/app/File.php" />
@@ -160,14 +174,16 @@
         <option value="$PROJECT_DIR$/app/Directory.php" />
         <option value="$PROJECT_DIR$/public/js/pages-js/uploader/config.js" />
         <option value="$PROJECT_DIR$/resources/views/local-file-viewer/file-upload.blade.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/file_viewer/Directories.vue" />
         <option value="$PROJECT_DIR$/app/Repository/FileViewer/FileViewer.php" />
         <option value="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" />
         <option value="$PROJECT_DIR$/app/HelperClass/ValidationErrors.php" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Repository/FileViewer/FileViewerInterface.php" />
         <option value="$PROJECT_DIR$/app/Repository/FileViewer/FileViewerEloquent.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FileViewerController.php" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
+        <option value="$PROJECT_DIR$/resources/js/app.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/file_viewer/Directories.vue" />
+        <option value="$PROJECT_DIR$/resources/js/module.js" />
         <option value="$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue" />
       </list>
     </option>
@@ -294,7 +310,7 @@
       <path value="$PROJECT_DIR$/vendor/chumper/zipper" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1385" />
@@ -305,7 +321,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -339,20 +354,11 @@
               <item name="components" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="file_viewer" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
-            <path>
-              <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
-              <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="routes" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="file-management" type="b2602c69:ProjectViewProjectNode" />
-              <item name="file-management" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="storage" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -420,14 +426,16 @@
       <workItem from="1554782767835" duration="16895000" />
       <workItem from="1554869168978" duration="19382000" />
       <workItem from="1554955274025" duration="16884000" />
+      <workItem from="1555300910296" duration="19099000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176198000" />
+    <option name="totallyTimeSpent" value="195297000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.32972974" />
@@ -436,7 +444,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.51835537" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20337838" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20675676" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -463,13 +471,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/partials/_head.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/partials/_script.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
@@ -533,11 +534,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-243" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/bootstrap.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-675">
@@ -599,13 +595,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="27" column="3" lean-forward="true" selection-start-line="27" selection-start-column="3" selection-end-line="27" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/storage/app/Radiate/Audios/Bangla/Habib/New Song/1552936001_1536601277.JPG" />
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/HomeController.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -654,13 +643,6 @@
         <state relative-caret-position="-17631" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/master.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/partials/_head.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
@@ -679,13 +661,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="14" column="19" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/local-file-viewer/local-file-viewer.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="46" />
         </state>
       </provider>
     </entry>
@@ -727,25 +702,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/file_viewer/Directories.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="97" column="26" selection-start-line="74" selection-start-column="8" selection-end-line="97" selection-end-column="26" />
-          <folding>
-            <element signature="n#div#2;n#div#0;n#template#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/File.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
           <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/app/public/Radiate/Images/Pritee/1554891250_reverse.jpg.jpg">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
@@ -759,37 +721,34 @@
         <state relative-caret-position="-1206" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Repository/FileViewer/FileViewerInterface.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/master.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
+        <state relative-caret-position="350">
+          <caret line="39" column="26" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue">
+    <entry file="file://$PROJECT_DIR$/resources/views/local-file-viewer/local-file-viewer.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="78" column="78" selection-start-line="78" selection-start-column="60" selection-end-line="78" selection-end-column="78" />
-          <folding>
-            <element signature="n#div#2;n#div#1;n#div#0;n#template#0;n#!!top" />
-          </folding>
+        <state relative-caret-position="-757">
+          <caret column="16" selection-start-column="10" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Repository/FileViewer/FileViewerEloquent.php">
+    <entry file="file://$PROJECT_DIR$/public/index.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="253" column="44" selection-start-line="253" selection-start-column="44" selection-end-line="253" selection-end-column="44" />
-          <folding>
-            <element signature="e#130#148#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="335">
+          <caret line="22" column="25" lean-forward="true" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FileViewerController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="188" column="57" selection-start-line="188" selection-start-column="57" selection-end-line="188" selection-end-column="57" />
+        <state relative-caret-position="340">
+          <caret line="202" column="7" selection-start-line="202" selection-start-column="7" selection-end-line="202" selection-end-column="7" />
           <folding>
             <element signature="e#39#57#0#PHP" expanded="true" />
           </folding>
@@ -798,8 +757,60 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="33" column="21" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="21" />
+        <state relative-caret-position="288">
+          <caret line="31" column="26" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Repository/FileViewer/FileViewerInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="30" column="50" selection-start-line="30" selection-start-column="50" selection-end-line="30" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Repository/FileViewer/FileViewerEloquent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="531">
+          <caret line="280" column="9" selection-start-line="280" selection-start-column="9" selection-end-line="280" selection-end-column="9" />
+          <folding>
+            <element signature="e#130#148#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/file_viewer/Directories.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="150" selection-start-line="150" selection-end-line="150" />
+          <folding>
+            <element signature="n#div#2;n#div#0;n#template#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="14" column="38" lean-forward="true" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/file_viewer/FileViewer.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="353" column="25" lean-forward="true" selection-start-line="353" selection-start-column="25" selection-end-line="353" selection-end-column="25" />
+          <folding>
+            <element signature="n#div#2;n#div#1;n#div#0;n#template#0;n#!!top" />
+            <element signature="e#12113#12156#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

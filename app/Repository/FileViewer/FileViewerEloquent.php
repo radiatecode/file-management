@@ -254,4 +254,31 @@ class FileViewerEloquent implements FileViewerInterface
         $file = $this->fileModel->find($id);
         return Storage::download(self::$STORE.$file->file_path);
     }
+
+    public function deleteFiles(Request $request)
+    {
+        $selected_files = $request->selected_files;
+        foreach ($selected_files as $id){
+            $file =  $this->fileModel->find($id);
+            $path = self::$STORE.$file->file_path;
+            $exist = Storage::exists($path);
+            if ($exist) {
+                $file->delete();
+                Storage::delete($path);
+            }
+        }
+        return response()->json('success',201);
+    }
+
+    public function deleteFile($id)
+    {
+        $file =  $this->fileModel->find($id);
+        $path = self::$STORE.$file->file_path;
+        $exist = Storage::exists($path);
+        if ($exist) {
+            $file->delete();
+            Storage::delete($path);
+        }
+        return response()->json('success',201);
+    }
 }

@@ -28,7 +28,9 @@ interface FileViewerInterface
     public function copyFiles(Request $request);
     public function renameFiles(Request $request);
     public function downloadAsZip(Request $request);
+    public function deleteFiles(Request $request);
     public function downloadSingleFile($id);
+    public function deleteFile($id);
 
 
 }

@@ -148,7 +148,7 @@
                     .then((response) => {
                         this.loader = false;
                         if (response.data.length===0){
-                            alert('no dir found')
+                            this.dir_list = response.data;
                         } else{
                             this.dir_list = response.data;
                         }
