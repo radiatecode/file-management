@@ -1864,6 +1864,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Directories",
   data: function data() {
@@ -1876,7 +1879,9 @@ __webpack_require__.r(__webpack_exports__);
       dir_list: {},
       dir_name: '',
       sub_dir_id: 0,
+      prev_dirs: {},
       prop_data: {
+        root_id: 0,
         dir: '',
         dir_path: ''
       },
@@ -1888,6 +1893,9 @@ __webpack_require__.r(__webpack_exports__);
         dir_path: '',
         error: '',
         selected_files: []
+      },
+      error: {
+        dir_error: ''
       }
     };
   },
@@ -1909,14 +1917,20 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/get/sub/dir/' + this.sub_dir_id).then(function (response) {
         _this.loader = false;
 
-        if (response.data.length === 0) {
-          _this.dir_list = response.data;
+        if (response.data.dir_data.length === 0) {
+          _this.error.dir_error = "No Directory Found!";
+          _this.dir_list = response.data.dir_data;
         } else {
-          _this.dir_list = response.data;
-        } //console.log(response.data)
+          _this.error.dir_error = "";
+          _this.dir_list = response.data.dir_data;
+        }
 
+        _this.prev_dirs = response.data.root_data;
+        console.log(_this.sub_dir_id);
+        console.log(_this.prev_dirs); //console.log(response.data)
       }).catch(function (error) {
-        return console.log(error);
+        _this.error.dir_error = "";
+        console.log(error);
       });
     },
     getDir: function getDir() {
@@ -1925,12 +1939,31 @@ __webpack_require__.r(__webpack_exports__);
       this.loader = true;
       this.prop_data.dir = this.directory;
       this.prop_data.dir_path = this.dir_path;
-      axios.get('/get/dir/' + this.root_dir_id).then(function (response) {
+      this.prop_data.root_id = this.root_dir_id;
+      axios.get('/get/dir/' + this.prop_data.root_id).then(function (response) {
         _this2.loader = false;
-        _this2.dir_list = response.data;
+
+        if (response.data.length === 0) {
+          _this2.error.dir_error = "No Directory Found!";
+          _this2.dir_list = response.data;
+        } else {
+          _this2.error.dir_error = "";
+          _this2.dir_list = response.data;
+        }
       }).catch(function (error) {
-        return console.log(error);
+        _this2.error.dir_error = "";
+        console.log(error);
       });
+    },
+    backDir: function backDir() {
+      if (this.prev_dirs) {
+        if (this.prev_dirs.prev_dir_id !== 0) {
+          this.getSubDir(this.prev_dirs.prev_dir_id, this.prev_dirs.prev_dir, this.prev_dirs.prev_path);
+        } else {
+          this.prop_data.root_id = this.prev_dirs.prev_root_id;
+          this.getDir();
+        }
+      }
     },
     showFolderModal: function showFolderModal() {
       this.modal.folderModalIn = "in";
@@ -2228,8 +2261,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.response_error = response.data.data;
         }
 
-        _this.file_loader = false;
-        console.log(response.data.data);
+        _this.file_loader = false; //console.log(response.data.data)
       }).catch(function (error) {
         return console.log(error);
       }); //console.log("hello "+this.container.get_dir_id);
@@ -2288,19 +2320,22 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.move_files.selected_files.length > 0) {
         var request = {
-          text: "You want to move the files?",
-          confirmText: "Yes, Move It",
+          text: this.move_files.mode === 'move' ? "You want to move the files?" : "You want to copy the files?",
+          confirmText: this.move_files.mode === 'move' ? "Yes, Move It" : "Yes, Copy It",
           url: this.move_files.mode === 'move' ? '/move/files' : '/copy/files',
           data: data,
           log: true,
           errorAlert: true,
           successAlert: {
             alert: true,
-            title: 'Moved!',
-            message: 'You have Successfully Move the files'
+            title: this.move_files.mode === 'move' ? 'Moved!' : 'Copied!',
+            message: this.move_files.mode === 'move' ? 'You have Successfully Move the files' : 'You have Successfully Copy the files'
           },
-          successAction: function successAction(response) {
-            return 'Hello';
+          object: this,
+          successAction: function successAction(object) {
+            object.getFiles();
+            object.closeMoveModal();
+            object.move_files.selected_files = [];
           }
         };
         _module__WEBPACK_IMPORTED_MODULE_1___default.a.postConfirmRoute(request);
@@ -2327,9 +2362,14 @@ __webpack_require__.r(__webpack_exports__);
             title: 'Renamed!',
             message: 'You have Successfully Rename the file'
           },
-          successAction: function successAction(response) {}
+          object: this,
+          successAction: function successAction(object) {
+            object.getFiles();
+            object.closeEditModal();
+            object.move_files.selected_files = [];
+          }
         };
-        _module__WEBPACK_IMPORTED_MODULE_1___default.a.postConfirmRoute(request);
+        _module__WEBPACK_IMPORTED_MODULE_1___default.a.postConfirmRoute(request, this);
       }
     },
     download: function download() {
@@ -2435,7 +2475,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     change_dir: function change_dir() {
-      this.getFiles();
+      this.getFiles(); //console.log(this.container);
     }
   }
 });
@@ -23427,7 +23467,14 @@ var render = function() {
         _vm._v(" "),
         _vm._m(0),
         _vm._v(" "),
-        _vm._m(1)
+        _c(
+          "button",
+          { staticClass: "btn btn-warning btn-sm", on: { click: _vm.backDir } },
+          [
+            _c("i", { staticClass: "fa fa-backward" }),
+            _vm._v(" Back\n            ")
+          ]
+        )
       ])
     ]),
     _vm._v(" "),
@@ -23471,118 +23518,143 @@ var render = function() {
               "table",
               { staticClass: "table table-striped table-bordered table-hover" },
               [
-                _vm._m(2),
+                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "tbody",
-                  _vm._l(_vm.getDirList, function(dir) {
-                    return _c("tr", [
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "checkbox3 checkbox-danger checkbox-inline checkbox-check  checkbox-circle checkbox-light"
-                          },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.selected_dirs,
-                                  expression: "selected_dirs"
-                                }
-                              ],
-                              attrs: {
-                                type: "checkbox",
-                                id: "checkbox-fa-light-" + dir.id
-                              },
-                              domProps: {
-                                value: dir.id,
-                                checked: Array.isArray(_vm.selected_dirs)
-                                  ? _vm._i(_vm.selected_dirs, dir.id) > -1
-                                  : _vm.selected_dirs
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$a = _vm.selected_dirs,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = dir.id,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        (_vm.selected_dirs = $$a.concat([$$v]))
+                  [
+                    _vm._l(_vm.getDirList, function(dir) {
+                      return _c("tr", [
+                        _c("td", [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "checkbox3 checkbox-danger checkbox-inline checkbox-check  checkbox-circle checkbox-light"
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.selected_dirs,
+                                    expression: "selected_dirs"
+                                  }
+                                ],
+                                attrs: {
+                                  type: "checkbox",
+                                  id: "checkbox-fa-light-" + dir.id
+                                },
+                                domProps: {
+                                  value: dir.id,
+                                  checked: Array.isArray(_vm.selected_dirs)
+                                    ? _vm._i(_vm.selected_dirs, dir.id) > -1
+                                    : _vm.selected_dirs
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$a = _vm.selected_dirs,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = dir.id,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          (_vm.selected_dirs = $$a.concat([
+                                            $$v
+                                          ]))
+                                      } else {
+                                        $$i > -1 &&
+                                          (_vm.selected_dirs = $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1)))
+                                      }
                                     } else {
-                                      $$i > -1 &&
-                                        (_vm.selected_dirs = $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1)))
+                                      _vm.selected_dirs = $$c
                                     }
-                                  } else {
-                                    _vm.selected_dirs = $$c
                                   }
                                 }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("label", {
-                              attrs: { for: "checkbox-fa-light-" + dir.id }
-                            })
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                return _vm.getSubDir(
-                                  dir.id,
-                                  dir.sub_dir,
-                                  dir.dir_path
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c("span", { staticClass: "icon text-center" }, [
-                              _c("i", { staticClass: "fa fa-folder-o fa-2x" }),
-                              _vm._v(
-                                " " +
-                                  _vm._s(dir.sub_dir) +
-                                  "\n                                "
-                              )
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("i", { staticClass: "fa fa-folder fa-1x" }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "badge" }, [
-                          _vm._v(_vm._s(dir.folders))
+                              }),
+                              _vm._v(" "),
+                              _c("label", {
+                                attrs: { for: "checkbox-fa-light-" + dir.id }
+                              })
+                            ]
+                          )
                         ]),
                         _vm._v(" "),
-                        _c("i", { staticClass: "fa fa-files-o fa-1x" }),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.getSubDir(
+                                    dir.id,
+                                    dir.sub_dir,
+                                    dir.dir_path
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("span", { staticClass: "icon text-center" }, [
+                                _c("i", {
+                                  staticClass: "fa fa-folder-o fa-2x"
+                                }),
+                                _vm._v(
+                                  " " +
+                                    _vm._s(dir.sub_dir) +
+                                    "\n                                "
+                                )
+                              ])
+                            ]
+                          )
+                        ]),
                         _vm._v(" "),
-                        _c("span", { staticClass: "badge" }, [
-                          _vm._v(_vm._s(dir.files))
+                        _c("td", [
+                          _c("i", { staticClass: "fa fa-folder fa-1x" }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "badge" }, [
+                            _vm._v(_vm._s(dir.folders))
+                          ]),
+                          _vm._v(" "),
+                          _c("i", { staticClass: "fa fa-files-o fa-1x" }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "badge" }, [
+                            _vm._v(_vm._s(dir.files))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(dir.created_at))]),
+                        _vm._v(" "),
+                        _vm._m(2, true)
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "tr",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.error.dir_error,
+                            expression: "error.dir_error"
+                          }
+                        ]
+                      },
+                      [
+                        _c("td", { attrs: { colspan: "5" } }, [
+                          _vm._v(_vm._s(_vm.error.dir_error))
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(dir.created_at))]),
-                      _vm._v(" "),
-                      _vm._m(3, true)
-                    ])
-                  }),
-                  0
+                      ]
+                    )
+                  ],
+                  2
                 )
               ]
             )
@@ -23688,15 +23760,6 @@ var staticRenderFns = [
     return _c("button", { staticClass: "btn btn-danger btn-sm" }, [
       _c("i", { staticClass: "fa fa-trash-o" }),
       _vm._v(" Delete\n            ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-warning btn-sm" }, [
-      _c("i", { staticClass: "fa fa-backward" }),
-      _vm._v(" Back\n            ")
     ])
   },
   function() {
@@ -36907,7 +36970,7 @@ module.exports = {
     }).then(function (result) {
       if (result.value) {
         axios.post(request.url, request.data).then(function (response) {
-          request.successAction(response);
+          request.successAction(request.object);
 
           if (request.successAlert.alert) {
             Vue.swal(request.successAlert.title, request.successAlert.message, 'success');

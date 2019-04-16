@@ -8,7 +8,7 @@
                 <button class="btn btn-danger btn-sm">
                     <i class="fa fa-trash-o"></i> Delete
                 </button>
-                <button class="btn btn-warning btn-sm">
+                <button @click="backDir" class="btn btn-warning btn-sm">
                     <i class="fa fa-backward"></i> Back
                 </button>
             </div>
@@ -67,6 +67,9 @@
                                 <button class="bt btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>
                             </td>
                         </tr>
+                        <tr v-show="error.dir_error">
+                            <td colspan="5">{{ error.dir_error }}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -112,7 +115,9 @@
                 dir_list:{},
                 dir_name:'',
                 sub_dir_id:0,
+                prev_dirs:{},
                 prop_data:{
+                    root_id:0,
                     dir:'',
                     dir_path:''
                 },
@@ -124,6 +129,9 @@
                     dir_path:'',
                     error:'',
                     selected_files:[]
+                },
+                error:{
+                    dir_error:''
                 }
             }
         },
@@ -147,29 +155,57 @@
                 axios.get('/get/sub/dir/'+this.sub_dir_id)
                     .then((response) => {
                         this.loader = false;
-                        if (response.data.length===0){
-                            this.dir_list = response.data;
+                        if (response.data.dir_data.length===0){
+                            this.error.dir_error = "No Directory Found!";
+                            this.dir_list = response.data.dir_data;
                         } else{
-                            this.dir_list = response.data;
+                            this.error.dir_error = "";
+                            this.dir_list = response.data.dir_data;
                         }
+                        this.prev_dirs = response.data.root_data;
+                        console.log(this.sub_dir_id);
+                        console.log(this.prev_dirs);
                         //console.log(response.data)
                     })
-                    .catch((error) =>
+                    .catch((error) => {
+                        this.error.dir_error = "";
                         console.log(error)
-                    );
+                    });
             },
             getDir(){
                 this.loader = true;
                 this.prop_data.dir = this.directory;
                 this.prop_data.dir_path = this.dir_path;
-                axios.get('/get/dir/'+this.root_dir_id)
+                this.prop_data.root_id = this.root_dir_id;
+                axios.get('/get/dir/'+this.prop_data.root_id)
                     .then((response) => {
                         this.loader = false;
-                        this.dir_list = response.data;
+                        if (response.data.length===0){
+                            this.error.dir_error = "No Directory Found!";
+                            this.dir_list = response.data;
+                        } else{
+                            this.error.dir_error = "";
+                            this.dir_list = response.data;
+                        }
                     })
-                    .catch((error) =>
-                        console.log(error)
-                    );
+                    .catch((error) => {
+                        this.error.dir_error = "";
+                        console.log(error);
+                    });
+            },
+            backDir(){
+                if (this.prev_dirs ) {
+                    if (this.prev_dirs.prev_dir_id!==0) {
+                        this.getSubDir(
+                            this.prev_dirs.prev_dir_id,
+                            this.prev_dirs.prev_dir,
+                            this.prev_dirs.prev_path
+                        );
+                    }else{
+                        this.prop_data.root_id = this.prev_dirs.prev_root_id;
+                        this.getDir();
+                    }
+                }
             },
             showFolderModal(){
                 this.modal.folderModalIn="in";

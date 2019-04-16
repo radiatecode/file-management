@@ -13,7 +13,7 @@ module.exports={
            if (result.value){
                axios.post(request.url,request.data)
                    .then((response)=>{
-                       request.successAction(response);
+                       request.successAction(request.object);
                        if (request.successAlert.alert) {
                            Vue.swal(
                                request.successAlert.title,

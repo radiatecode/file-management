@@ -65,6 +65,7 @@ class FileViewerEloquent implements FileViewerInterface
         $dirs = $this->directoryModel
             ->where('root_dir_id',$root_id)
             ->where('sub_dir_id',0)
+            ->orderBy('sub_dir','ASC')
             ->get();
         foreach ($dirs as $dir){
             $dirData[] = [
@@ -84,7 +85,10 @@ class FileViewerEloquent implements FileViewerInterface
         $dirData = [];
         $dirs= $this->directoryModel
             ->where('sub_dir_id',$sub_dir_id)
+            ->orderBy('sub_dir','ASC')
             ->get();
+        $rootDir = $this->directoryModel->find($sub_dir_id);
+
         foreach ($dirs as $dir){
             $dirData[] = [
                 'id'=>$dir->id,
@@ -95,7 +99,23 @@ class FileViewerEloquent implements FileViewerInterface
                 'created_at'=>''.$dir->created_at
             ];
         }
-        return response()->json($dirData,201);
+        if ($rootDir->sub_dir_id!=0){
+            $prev_dir = $rootDir->folder->sub_dir;
+            $prev_path = $rootDir->folder->dir_path;
+        }else{
+            $prev_dir = $rootDir->file_types->dir_name;
+            $prev_path = $rootDir->file_types->dir_path;
+        }
+        $rootData = [
+            'prev_root_id'=>$rootDir->root_dir_id,
+            'prev_dir_id'=>$rootDir->sub_dir_id,
+            'prev_dir'=>$prev_dir,
+            'prev_path'=>$prev_path,
+        ];
+        return response()->json([
+            'dir_data'=>$dirData,
+            'root_data'=>$rootData
+        ],201);
     }
 
     public function getJsonDirFiles($id)
@@ -209,8 +229,14 @@ class FileViewerEloquent implements FileViewerInterface
             $oldFile = $this->fileModel->find($id);
             $old_file_path = $oldFile->file_path;
             $new_file_path = $directory->dir_path."/".$oldFile->file_name;
+            $exist = Storage::exists(self::$STORE.$new_file_path);
 
             $file = $oldFile->replicate();
+            if ($exist){
+                $file_name = "copy(".time().")_".$oldFile->file_name;
+                $new_file_path = $directory->dir_path."/".$file_name;
+                $file->file_name = $file_name;
+            }
             $file->dir_id = $request->move_dir_id;
             $file->file_path = $new_file_path;
             $file->file_type = $directory->file_types->file_type;

@@ -17,4 +17,8 @@ class Directory extends Model
     public function folders(){
         return $this->hasMany('App\Directory','sub_dir_id','id');
     }
+
+    public function folder(){
+        return $this->belongsTo('App\Directory','sub_dir_id');
+    }
 }

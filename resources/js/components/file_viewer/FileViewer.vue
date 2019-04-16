@@ -234,6 +234,7 @@
            //console.log(this.container)
             this.getFiles();
             this.getRootDir();
+
         },
         methods:{
             getFiles(){
@@ -248,7 +249,7 @@
                                 this.response_error = response.data.data
                             }
                             this.file_loader = false;
-                            console.log(response.data.data)
+                            //console.log(response.data.data)
                         }
                     ).catch((error) =>
                         console.log(error)
@@ -307,19 +308,27 @@
                 };
                 if (this.move_files.selected_files.length>0){
                     let request = {
-                        text:"You want to move the files?",
-                        confirmText:"Yes, Move It",
+                        text:this.move_files.mode==='move'?
+                            "You want to move the files?":
+                            "You want to copy the files?",
+                        confirmText:this.move_files.mode==='move'?
+                            "Yes, Move It":"Yes, Copy It",
                         url:this.move_files.mode==='move'?'/move/files':'/copy/files',
                         data:data,
                         log:true,
                         errorAlert:true,
                         successAlert:{
                             alert:true,
-                            title:'Moved!',
-                            message:'You have Successfully Move the files'
+                            title:this.move_files.mode==='move'?'Moved!':'Copied!',
+                            message:this.move_files.mode==='move'?
+                                'You have Successfully Move the files':
+                                'You have Successfully Copy the files'
                         },
-                        successAction:function (response) {
-                            return 'Hello';
+                        object:this,
+                        successAction:function (object) {
+                            object.getFiles();
+                            object.closeMoveModal();
+                            object.move_files.selected_files=[];
                         }
                     };
                     Request.postConfirmRoute(request);
@@ -349,13 +358,14 @@
                             title:'Renamed!',
                             message:'You have Successfully Rename the file'
                         },
-                        successAction:function (response) {
-                            
+                        object:this,
+                        successAction:function (object) {
+                            object.getFiles();
+                            object.closeEditModal();
+                            object.move_files.selected_files=[];
                         }
-
                     };
-
-                    Request.postConfirmRoute(request);
+                    Request.postConfirmRoute(request,this);
                 }
             },
             download(){
@@ -463,6 +473,7 @@
         watch:{
             change_dir:function () {
                 this.getFiles();
+                //console.log(this.container);
             }
         }
     }
